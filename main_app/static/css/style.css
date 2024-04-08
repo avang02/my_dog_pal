@@ -1,0 +1,28 @@
+body {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+header {
+    background-color: #ffcc00;
+    color: white;
+}
+
+nav {
+    background-color: #333;
+    color: white;
+}
+
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff6600;
+}
+
+button {
+    background-color: #ff6600;
+    color: white;
+}
