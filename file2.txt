@@ -1,6 +1,3 @@
 This is the second push and pull request test.
 hey this is yeani testing again
-<<<<<<< HEAD
-=======
 hey just making some random changes
->>>>>>> 0174e8dd1a5c5b2a919e81adbcc1974addadad06
