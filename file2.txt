@@ -1,6 +1,2 @@
 This is the second push and pull request test.
-<<<<<<< HEAD
 hey this is yeani testing again
-=======
-hey this is yeani
->>>>>>> main
