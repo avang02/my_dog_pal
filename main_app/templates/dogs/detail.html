@@ -8,5 +8,6 @@
 <p>{{ dog.neutered_spayed }}</p>
 <p>{{ dog.weight }}</p>
 <p>{{ dog.birthdate }}</p>
+<a href="{% url 'dogs_delete' dog.id %}">Delete</a>
 
 {% endblock %}
