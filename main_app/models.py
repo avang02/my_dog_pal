@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -9,6 +10,7 @@ class Dog(models.Model):
     neutered_spayed = models.BooleanField(default=False)
     weight = models.FloatField()
     birthdate = models.DateField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __string__(self):
         return self.name

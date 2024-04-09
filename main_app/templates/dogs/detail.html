@@ -9,5 +9,6 @@
 <p>{{ dog.weight }}</p>
 <p>{{ dog.birthdate }}</p>
 <a href="{% url 'dogs_delete' dog.id %}">Delete</a>
+<a href="{% url 'dogs_update' dog.id %}">Edit</a>
 
 {% endblock %}
