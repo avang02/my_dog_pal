@@ -1,12 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<h1>Sign Up</h1>
-<p class="red-text">{{ error_message }}</p>
-<form action="{% url 'signup' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn">Sign Up</button>
-</form>
-
+<div class="signup-container">
+    <h1>Sign Up</h1>
+    <p class="error-message">{{ error_message }}</p>
+    <form action="{% url 'signup' %}" method="POST" class="signup-form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+        </div>
+        <div class="form-group">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+</div>
 {% endblock %}
