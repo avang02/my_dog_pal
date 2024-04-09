@@ -34,7 +34,7 @@ class DogUpdate(UpdateView):
     model = Dog
     fields = '__all__'
 
-def signup(requeset):
+def signup(request):
     error_message=''
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
