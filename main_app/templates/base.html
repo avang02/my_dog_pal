@@ -12,12 +12,10 @@
 <body>
   <header>
     <nav>
-      <div>
+      <div class="nav-container">
+          <li><img src="{% static 'images/MyDogPalLogo.png' %}" alt="MyDogPal Logo"></li>
         <ul>
-          <li><a href="/" class="main-logo">MyDogPal</a></li>
-        </ul>
-        <ul class="right">
-          <li><a href="/">Home</a></li>
+          <li><a href="/dogs">My Dogs</a></li>
           <li><a href="{% url 'dogs_create' %}">Add Dog</a></li>
         </ul>
       </div>
