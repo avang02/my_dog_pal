@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'mydogpal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_dog_pal',
+        'NAME': 'my_dog_pals',
     }
 }
 
