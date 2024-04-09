@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import request
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import Dog
 
 # Create your views here.
@@ -27,3 +27,7 @@ class DogCreate(CreateView):
 class DogDelete(DeleteView):
     model = Dog
     success_url = '/dogs'
+
+class DogUpdate(UpdateView):
+    model = Dog
+    fields = '__all__'
