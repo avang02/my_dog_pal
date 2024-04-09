@@ -1,14 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Dog List</h1>
+<h1>Dog Details</h1>
 
-<p>{{ dog.name }}</p>
-<p>{{ dog.breed }}</p>
-<p>{{ dog.neutered_spayed }}</p>
-<p>{{ dog.weight }}</p>
-<p>{{ dog.birthdate }}</p>
-<a href="{% url 'dogs_delete' dog.id %}">Delete</a>
-<a href="{% url 'dogs_update' dog.id %}">Edit</a>
+<div class="card">
+    <div class="card-content">
+        <h2 class="card-title">{{ dog.name }}</h2>
+        <p><strong>Breed:</strong> {{ dog.breed }}</p>
+        <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
+        <p><strong>Weight:</strong> {{ dog.weight }}</p>
+        <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
+    </div>
+    <div class="card-actions">
+        <a href="{% url 'dogs_delete' dog.id %}" class="btn-delete">Delete</a>
+        <a href="{% url 'dogs_update' dog.id %}" class="btn-edit">Edit</a>
+    </div>
+</div>
 
 {% endblock %}
