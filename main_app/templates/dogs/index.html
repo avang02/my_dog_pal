@@ -3,22 +3,20 @@
 
 <h1>Dog List</h1>
 
-{% for dog in dogs %}
-    <a href="{% url 'detail' dog.id %}">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">{{ dog.name }}</span>
-                <p>Breed: {{ dog.breed }}</p>
-                {% if dog.neutered_spayed %}
-                <p>Neutered/Spayed: Yes</p>
-                {% else %}
-                <p>Neutered/Spayed: No</p>
-                {% endif %}
-                <p>Weight: {{ dog.weight }}</p>
-                <p>Birthdate: {{ dog.birthdate }}</p>
+<div class="card-container">
+    {% for dog in dogs %}
+        <a href="{% url 'detail' dog.id %}" class="card-link">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ dog.name }}</span>
+                    <p>Breed: {{ dog.breed }}</p>
+                    <p>Neutered/Spayed: {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
+                    <p>Weight: {{ dog.weight }}</p>
+                    <p>Birthdate: {{ dog.birthdate }}</p>
+                </div>
             </div>
-        </div>
-    </a>
-{% endfor %}
+        </a>
+    {% endfor %}
+</div>
 
 {% endblock %}
