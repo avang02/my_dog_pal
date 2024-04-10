@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import request
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic import ListView
 from .models import Dog, DogFood
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -60,6 +61,13 @@ class DogFoodCreate(LoginRequiredMixin, CreateView):
     model = DogFood
     fields = '__all__'
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+class DogFoodList(LoginRequiredMixin, ListView):
+    model = DogFood
+
 class DogFoodDelete(LoginRequiredMixin, DeleteView):
     model = DogFood
     success_url = '/dogs/'
@@ -67,3 +75,9 @@ class DogFoodDelete(LoginRequiredMixin, DeleteView):
 class DogFoodUpdate(LoginRequiredMixin, UpdateView):
     model = DogFood
     fields = '__all__'
+
+def dogfood_detail(request, pk):
+    dogfood = DogFood.objects.get(id=pk)
+    return render(request, 'dogfood/detail.html', {
+        'dogfood': dogfood
+    })

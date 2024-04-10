@@ -39,4 +39,3 @@ class Dog(models.Model):
 
 
 
-
