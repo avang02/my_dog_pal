@@ -113,12 +113,18 @@ class FoodTransCreate(LoginRequiredMixin, CreateView):
 @login_required 
 def foodtrans_detail(request, pk):
     foodtrans = FoodTrans.objects.get(id=pk)
-    dogfood = foodtrans.current_food.values_list('id')
     return render(request, 'foodtrans/detail.html', {
         'foodtrans': foodtrans,
-        'dogfood': dogfood
     })
 
 class FoodTransList(LoginRequiredMixin, ListView):
     model = FoodTrans
+
+class FoodTransDelete(LoginRequiredMixin, DeleteView):
+    model = FoodTrans
+    success_url = '/foodtrans/'
+
+class FoodTransUpdate(LoginRequiredMixin, UpdateView):
+    model = FoodTrans
+    fields = '__all__'
     

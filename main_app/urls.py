@@ -19,5 +19,9 @@ urlpatterns = [
     path('foodtrans/create/', views.FoodTransCreate.as_view(), name='foodtrans_create'),
     path('foodtrans/<int:pk>', views.foodtrans_detail, name='foodtrans_detail'),
     path('foodtrans/', views.FoodTransList.as_view(), name='foodtrans_index'),
+    path('foodtrans/<int:pk>/update/', views.FoodTransUpdate.as_view(), name='foodtrans_update'),
+    path('foodtrans/<int:pk>/delete/', views.FoodTransDelete.as_view(), name='foodtrans_delete'),
+    
+
 
 ]
