@@ -15,4 +15,5 @@ urlpatterns = [
     path('dogfood/<int:pk>/update/', views.DogFoodUpdate.as_view(), name='dogfood_update'),
     path('dogfood/<int:pk>/delete/', views.DogFoodDelete.as_view(), name='dogfood_delete'),
     path('dogs/<int:dog_id>/assoc_dogfood/<int:dogfood_id>/', views.assoc_dogfood, name='assoc_dogfood'),
+    path('dogs/<int:dog_id>/unassoc_dogfood/<int:dogfood_id>/', views.unassoc_dogfood, name='unassoc_dogfood'),
 ]
