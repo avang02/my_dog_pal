@@ -110,3 +110,11 @@ class FoodTransCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
+@login_required 
+def foodtrans_detail(request, pk):
+    foodtrans = FoodTrans.objects.get(id=pk)
+    dogfood = foodtrans.current_food.values_list('id')
+    return render(request, 'foodtrans/detail.html', {
+        'foodtrans': foodtrans,
+        'dogfood': dogfood
+    })
