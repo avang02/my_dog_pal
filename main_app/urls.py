@@ -17,7 +17,7 @@ urlpatterns = [
     path('dogs/<int:dog_id>/assoc_dogfood/<int:dogfood_id>/', views.assoc_dogfood, name='assoc_dogfood'),
     path('dogs/<int:dog_id>/unassoc_dogfood/<int:dogfood_id>/', views.unassoc_dogfood, name='unassoc_dogfood'),
     path('foodtrans/create/', views.FoodTransCreate.as_view(), name='foodtrans_create'),
-    path('foodtrans/<int:pk>', views.foodtrans_detail.as_view(), name='foodtrans_detail'),
+    path('foodtrans/<int:pk>', views.foodtrans_detail, name='foodtrans_detail'),
 
 
 ]
