@@ -23,8 +23,11 @@ def dogs_index(request):
 @login_required
 def dogs_detail(request, dog_id):
     dog = Dog.objects.get(id=dog_id)
+    id_list = dog.dogfood.all().values_list('id')
+    dogfood_dog_doesnt_have = DogFood.objects.exclude(id__in=id_list)
     return render(request, 'dogs/detail.html', {
-        'dog': dog
+        'dog': dog,
+        'dogfood': dogfood_dog_doesnt_have
     })
 
 
