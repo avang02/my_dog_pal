@@ -80,16 +80,16 @@ footer {
 }
 
 .card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .card-content {
     font-size: 16px;
+    padding: 20px;
 }
 
 .card-title {
@@ -99,19 +99,21 @@ footer {
 }
 
 .card-actions {
+    border-top: 1px solid #ddd;
     padding: 10px 20px;
-    border-top: 1px solid #e0e0e0;
     display: flex;
     justify-content: space-between;
 }
 
-.btn-delete, .btn-edit {
-    text-decoration: none;
+.btn-delete,
+.btn-edit {
+    color: #fff;
     padding: 8px 16px;
     border-radius: 3px;
-    color: #fff;
     cursor: pointer;
+    text-decoration: none;
 }
+
 
 .btn-delete {
     background-color: #f44336;
@@ -119,6 +121,11 @@ footer {
 
 .btn-edit {
     background-color: #2196F3;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .form-container {
@@ -256,4 +263,16 @@ button.btn-primary {
 
 button.btn-primary:hover {
     background-color: #0056b3;
+}
+
+.col {
+    flex: 1;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
 }
