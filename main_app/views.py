@@ -30,8 +30,8 @@ def dogs_detail(request, dog_id):
 
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
-    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate' ]
-    
+    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate']
+    gi
 
 class DogDelete(LoginRequiredMixin, DeleteView):
     model = Dog
