@@ -42,6 +42,9 @@ class FoodTrans(models.Model):
     def __string__(self):
         return self.name
     
+    def get_absolute_url(self):
+        return reverse('foodtrans_detail', kwargs={'pk':self.id})
+    
 
 
 
