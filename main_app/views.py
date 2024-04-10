@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import request
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
-from .models import Dog, DogFood
+from .models import Dog, DogFood, FoodTrans
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -67,7 +67,6 @@ def signup(request):
 class DogFoodCreate(LoginRequiredMixin, CreateView):
     model = DogFood
     fields = '__all__'
-    # fields = ['name', 'kcalperserving', 'gramperserving', 'current_food', 'new_food']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -102,3 +101,12 @@ def assoc_dogfood(request, dog_id, dogfood_id):
 def unassoc_dogfood(request, dog_id, dogfood_id):
     Dog.objects.get(id=dog_id).dogfood.remove(dogfood_id)
     return redirect('detail', dog_id=dog_id)
+
+class FoodTransCreate(LoginRequiredMixin, CreateView):
+    model = FoodTrans
+    fields = '__all__'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
