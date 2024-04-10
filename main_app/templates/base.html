@@ -25,7 +25,9 @@
                 <li><a href="{% url 'dogfood_index' %}">Dog Food List</a></li>
                 <li><a href="{% url 'foodtrans_create' %}">Add Food Transition</a></li>
                 <li><a href="{% url 'foodtrans_index' %}">Food Transition Index</a></li>
-                <li>
+                <li><a href="{% url 'myvet_create' %}">Add Vet</a></li>
+                <li><a href="{% url 'myvet_index' %}">Vet Index</a></li>
+              
                     <form action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="btn">Log Out</button>

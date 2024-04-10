@@ -21,7 +21,9 @@ urlpatterns = [
     path('foodtrans/', views.FoodTransList.as_view(), name='foodtrans_index'),
     path('foodtrans/<int:pk>/update/', views.FoodTransUpdate.as_view(), name='foodtrans_update'),
     path('foodtrans/<int:pk>/delete/', views.FoodTransDelete.as_view(), name='foodtrans_delete'),
-    
+    path('myvet/create/', views.MyVetCreate.as_view(), name='myvet_create'),
+    path('myvet/', views.MyVetList.as_view(), name='myvet_index'),
+    path('myvet/<int:pk>', views.myvet_detail, name='myvet_detail'),
 
 
 ]
