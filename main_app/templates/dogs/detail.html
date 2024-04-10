@@ -21,15 +21,19 @@
       <div class="col s6">
         <h3>{{ dog.name }}'s Dogfood</h3>
         {% if dog.dogfood.count %}
-          {% for dogfood in dog.dogfood.all %}
+          {% for food in dog.dogfood.all %}
             <div class="card">
               <div class="card-content">
                 <span class="card-title">
-                    <p><strong>{{ dogfood.name }}</strong></p>
-                    <p><strong>{{ dogfood.kcalperserving }}</strong></p>
-                    <p><strong>{{ dogfood.gramperserving }}</strong></p>
-                    <p><strong>{{ dogfood.current_food }}</strong></p>
-                    <p><strong>{{ dogfood.new_food }}</strong></p>
+                    <p><strong>{{ food.name }}</strong></p>
+                    <p><strong>{{ food.kcalperserving }}</strong></p>
+                    <p><strong>{{ food.gramperserving }}</strong></p>
+                    <p><strong>{{ food.current_food }}</strong></p>
+                    <p><strong>{{ food.new_food }}</strong></p>
+                    <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Remove</button>
+                    </form>
                 </span>
               </div>
             </div>
@@ -44,21 +48,29 @@
 
 <div class="col s6">
   <h3>Dog Food</h3>
-          {% if dogfood.count %}
-          {% for food in dogfood %}
-          <a href="{% url 'detail' food.id %}" class="card-link">
-            <div class="card">
-                <div class="card-content">
-                  <span class="card-title">
-                      <p><strong>{{ food.name }}</strong></p>
-                  </span>
+        {% if dogfood.count %}
+            {% for food in dogfood %}
+                <div class="card">
+                    <div class="card-content">
+                    <span class="card-title">
+                        <p><strong>{{ food.name }}</strong></p>
+                        <p><strong>{{ food.kcalperserving }}</strong></p>
+                        <p><strong>{{ food.gramperserving }}</strong></p>
+                        <p><strong>{{ food.current_food }}</strong></p>
+                        <p><strong>{{ food.new_food }}</strong></p>
+                    </span>
+                    <div class="card-content">
+                        <form action="{% url 'assoc_dogfood' dog.id food.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">Add</button>
+                        </form>
+                    </div>
+                    </div>
                 </div>
-              </div>
-              
             {% endfor %}
-            {% else %}
+        {% else %}
             <p>No available dogfood found</p>
-            {% endif %}
+        {% endif %}
 </div>
 
 
