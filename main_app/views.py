@@ -31,7 +31,11 @@ def dogs_detail(request, dog_id):
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
     fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate']
-    gi
+    
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  
+        return super().form_valid(form)
 
 class DogDelete(LoginRequiredMixin, DeleteView):
     model = Dog
@@ -60,6 +64,7 @@ def signup(request):
 class DogFoodCreate(LoginRequiredMixin, CreateView):
     model = DogFood
     fields = '__all__'
+    # fields = ['name', 'kcalperserving', 'gramperserving', 'current_food', 'new_food']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -70,14 +75,27 @@ class DogFoodList(LoginRequiredMixin, ListView):
 
 class DogFoodDelete(LoginRequiredMixin, DeleteView):
     model = DogFood
-    success_url = '/dogs/'
+    success_url = '/dogfood/'
 
 class DogFoodUpdate(LoginRequiredMixin, UpdateView):
     model = DogFood
     fields = '__all__'
+    
 
+@login_required
 def dogfood_detail(request, pk):
     dogfood = DogFood.objects.get(id=pk)
     return render(request, 'dogfood/detail.html', {
         'dogfood': dogfood
     })
+
+
+@login_required
+def assoc_dogfood(request, dog_id, dogfood_id):
+    Dog.objects.get(id=dog_id).dogfood.add(dogfood_id)
+    return redirect('detail', dog_id=dog_id)
+
+@login_required
+def unassoc_dogfood(request, dog_id, dogfood_id):
+    Dog.objects.get(id=dog_id).dogfood.remove(dogfood_id)
+    return redirect('detail', dog_id=dog_id)
