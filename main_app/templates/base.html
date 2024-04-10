@@ -23,6 +23,8 @@
                 <li><a href="{% url 'dogs_create' %}">Add Dog</a></li>
                 <li><a href="{% url 'dogfood_create' %}">Add Dog Food</a></li>
                 <li><a href="{% url 'dogfood_index' %}">Dog Food List</a></li>
+                <li><a href="{% url 'foodtrans_create' %}">Add Food Transition</a></li>
+                <li><a href="{% url 'foodtrans_index' %}">Food Transition Detail</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
