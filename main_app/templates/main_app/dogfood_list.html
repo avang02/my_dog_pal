@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Dog Food List</h1>
+
+<div class="card-container">
+  {% for dogfood in dogfood_list %}
+    <a href="{% url 'dogfood_detail' dogfood.id %}" class="card-link">
+      <div class="card">
+          <div class="card-content">
+              <span class="card-title">{{ dogfood.name }}</span>
+              <p>KiloCalPerServing: {{ dogfood.kcalperserving }}</p>
+              <p>GramPerServing: {{ dogfood.gramperserving }}</p>
+              <p>Current Food: {{ dogfood.current_food }}</p>
+              <p>New Food: {{ dogfood.new_food }}</p>
+          </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+{% endblock %}
