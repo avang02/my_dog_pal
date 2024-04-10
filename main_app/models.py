@@ -18,6 +18,4 @@ class Dog(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'dog_id':self.id})
 
-class DogFood(models.Model):
-    name = models.CharField(max_length=50)
 
