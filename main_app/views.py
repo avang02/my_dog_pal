@@ -33,6 +33,7 @@ class DogCreate(LoginRequiredMixin, CreateView):
     # fields = '__all__'
     fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate']
     
+    # Gaay
 
     def form_valid(self, form):
         form.instance.user = self.request.user  
