@@ -10,6 +10,11 @@
         <p><strong>{{ dogfood.gramperserving }}</strong></p>
         <p><strong>{{ dogfood.current_food }}</strong></p>
         <p><strong>{{ dogfood.new_food }}</strong></p>
+
+    </div>
+    <div class="card-actions">
+        <a href="{% url 'dogfood_delete' dogfood.id %}" class="btn-delete">Delete</a>
+        <a href="{% url 'dogfood_update' dogfood.id %}" class="btn-edit">Edit</a>
     </div>
 </div>
 
