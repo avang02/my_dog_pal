@@ -25,7 +25,7 @@ class Dog(models.Model):
     weight = models.FloatField()
     birthdate = models.DateField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    dogfood = models.ManyToManyField(DogFood)
+    dogfood = models.ManyToManyField(DogFood, null=True, blank=True)
 
     
     def __string__(self):
