@@ -33,7 +33,7 @@ def dogs_detail(request, dog_id):
 
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
-    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate']
+    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate' ]
     
 
     def form_valid(self, form):
