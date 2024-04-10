@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Dog Vet List</h1>
+
+<div class="card-container">
+  {% for vet in myvet_list %}
+    <a href="{% url 'myvet_detail' vet.id %}" class="card-link">
+      <div class="card">
+          <div class="card-content">
+              <span class="card-title">{{ vet.name }}</span>
+              <p>Clinic Name: {{ myvet.clinic_name }}</p>
+              <p>Phone Number: {{ myvet.phone_number }}</p>
+              <p>Email: {{ myvet.email }}</p>
+              <p>Dog: {{ myvet.dog }}</p>
+          </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+{% endblock %}
