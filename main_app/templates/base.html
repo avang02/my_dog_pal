@@ -19,6 +19,7 @@
                 {% if user.is_authenticated %}
                 <li><a href="/dogs">My Dogs</a></li>
                 <li><a href="{% url 'dogs_create' %}">Add Dog</a></li>
+                <li><a href="{% url 'dogfood_create' %}">Add Dog Food</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
