@@ -118,3 +118,7 @@ def foodtrans_detail(request, pk):
         'foodtrans': foodtrans,
         'dogfood': dogfood
     })
+
+class FoodTransList(LoginRequiredMixin, ListView):
+    model = FoodTrans
+    
