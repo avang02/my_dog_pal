@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Dog Food List</h1>
+
+<div class="card-container">
+    {% for foodtrans in foodtrans_list %}
+    <a href="{% url 'foodtrans_detail' foodtrans.id %}" class="card-link">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ foodtrans.name }}</span>
+                <p>Current Food: {{ foodtrans.current_food }}</p>
+                <p>New Food: {{ foodtrans.new_food }}</p>
+                <p>Meals Per Day: {{ foodtrans.meals_a_day }}</p>
+                <p>Start Date: {{ foodtrans.start_date }}</p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+name = models.CharField(max_length=50)
+current_food = models.ForeignKey(DogFood, on_delete=models.CASCADE)
+new_food = models.CharField(max_length=50)
+meals_a_day = models.IntegerField()
+start_date = models.DateField()
