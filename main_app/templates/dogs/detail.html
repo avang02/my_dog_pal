@@ -17,4 +17,18 @@
     </div>
 </div>
 
+<div class="card">
+    <div class="card-content">
+        <h2 class="card-title">{{ dogfood.name }}</h2>
+        <p><strong>KCal Per Serving</strong>{{ dogfood.kcalperserving }}</p>
+        <p><strong>Grams Per Serving</strong>{{ dogfood.gramperserving }}</p>
+        <p><strong>Current Food</strong>{{ dogfood.current_food }}</p>
+        <p><strong>New Food</strong>{{ dogfood.new_food }}</p>
+    </div>
+    <div class="card-actions">
+        <a href="{% url 'dogfood_delete' dogfood.id %}" class="btn-delete">Delete</a>
+        <a href="{% url 'dogfood_update' dogfood.id %}" class="btn-edit">Edit</a>
+    </div>
+</div>
+
 {% endblock %}

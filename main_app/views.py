@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import request
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from .models import Dog
+from .models import Dog, DogFood
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -30,7 +30,7 @@ def dogs_detail(request, dog_id):
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
     fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate' ]
-
+    
 
 class DogDelete(LoginRequiredMixin, DeleteView):
     model = Dog
@@ -55,3 +55,15 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+class DogFoodCreate(LoginRequiredMixin, CreateView):
+    model = DogFood
+    fields = '__all__'
+
+class DogFoodDelete(LoginRequiredMixin, DeleteView):
+    model = DogFood
+    success_url = '/dogs/'
+
+class DogFoodUpdate(LoginRequiredMixin, UpdateView):
+    model = DogFood
+    fields = '__all__'
