@@ -25,7 +25,7 @@ class Dog(models.Model):
     weight = models.FloatField()
     birthdate = models.DateField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    dogfood = models.ManyToManyField(DogFood, null=True, blank=True)
+    dogfood = models.ManyToManyField(DogFood)
 
     
     def __string__(self):
@@ -34,6 +34,7 @@ class Dog(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'dog_id':self.id})
     
+
 
 
 
