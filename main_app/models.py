@@ -2,6 +2,17 @@ from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 
+activity = (
+    ('typical', 60.82), 
+    ('active', 69.18), 
+    ('overweight', 38.77), 
+    ('high_activity', 96.92), 
+    ('senior', 49.79), 
+    ('inactive', 49.79), 
+    ('light_duty', 77.36), 
+    ('med_duty', 89.99), 
+    ('high_duty', 117.63)
+    )
 
 # Create your models here.
 
@@ -59,4 +70,8 @@ class MyVet(models.Model):
 
     def get_absolute_url(self):
         return reverse('myvet_detail', kwargs={'pk':self.id})
+    
+class DogCalculator(models.Model):
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    activity = models.CharField(choices=activity)
 
