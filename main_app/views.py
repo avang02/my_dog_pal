@@ -72,22 +72,8 @@ class DogFoodCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
-<<<<<<< HEAD
-# @login_required
-# def dogfood_index(request):
-#     dogfoods = DogFood.objects.filter(user=request.user)
-#     return render(request, 'dogfood/index.html', {
-#         'dogfoods': dogfoods
-#     })
-
-
-class DogFoodList(LoginRequiredMixin, ListView):
-    model = DogFood
-    fields = ['name', 'kcalperserving', 'gramperserving']
-=======
 class DogFoodList(LoginRequiredMixin, ListView):
         model = DogFood
->>>>>>> main
 
 class DogFoodDelete(LoginRequiredMixin, DeleteView):
     model = DogFood
