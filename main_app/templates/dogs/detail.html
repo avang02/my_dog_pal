@@ -63,7 +63,23 @@
         {% else %}
             <p>No available dogfood found</p>
         {% endif %}
+
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Dog Food Calculator</h2>
+            <form action="" method="POST" name="dogcalculator_create">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Calculate" class="btn">
+            </form>
+        </div>
+    </div>
+        
 </div>
+
+
 
 
 

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import request
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
-from .models import Dog, DogFood, FoodTrans, MyVet
+from .models import Dog, DogFood, FoodTrans, MyVet, DogCalculator
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -46,7 +46,7 @@ class DogDelete(LoginRequiredMixin, DeleteView):
 
 class DogUpdate(LoginRequiredMixin, UpdateView):
     model = Dog
-    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate']
+    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate', 'img_url']
 
 def signup(request):
     error_message=''
@@ -157,4 +157,8 @@ class MyVetDelete(LoginRequiredMixin, DeleteView):
 
 class MyVetUpdate(LoginRequiredMixin, UpdateView):
     model = MyVet
+    fields = '__all__'
+
+class DogCalculatorCreate(LoginRequiredMixin, CreateView):
+    model = DogCalculator
     fields = '__all__'

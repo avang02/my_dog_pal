@@ -72,6 +72,8 @@ class MyVet(models.Model):
         return reverse('myvet_detail', kwargs={'pk':self.id})
     
 class DogCalculator(models.Model):
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    dog_weight = models.ForeignKey(Dog, on_delete=models.CASCADE)
     activity = models.CharField(choices=activity)
+    servingspercup = models.IntegerField()
+
 

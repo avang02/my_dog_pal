@@ -26,7 +26,7 @@ urlpatterns = [
     path('myvet/<int:pk>', views.myvet_detail, name='myvet_detail'),
     path('myvet/<int:pk>/update/', views.MyVetUpdate.as_view(), name='myvet_update'),
     path('myvet/<int:pk>/delete/', views.MyVetDelete.as_view(), name='myvet_delete'),
-
+    path('dogs/<int:dog_id>/create', views.DogCalculatorCreate.as_view(), name='dogcalculator_create'),
 
 
     
