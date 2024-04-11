@@ -11,7 +11,7 @@ urlpatterns = [
     path('accounts/signup/', views.signup, name='signup'),
     path('dogfood/create/', views.DogFoodCreate.as_view(), name='dogfood_create'),
     path('dogfood/<int:pk>', views.dogfood_detail, name='dogfood_detail'),
-    path('dogfood/', views.DogFoodList.as_view(), name='dogfood_index'),
+    path('dogfood/', views.dogfood_index, name='dogfood_index'),
     path('dogfood/<int:pk>/update/', views.DogFoodUpdate.as_view(), name='dogfood_update'),
     path('dogfood/<int:pk>/delete/', views.DogFoodDelete.as_view(), name='dogfood_delete'),
     path('dogs/<int:dog_id>/assoc_dogfood/<int:dogfood_id>/', views.assoc_dogfood, name='assoc_dogfood'),
@@ -24,6 +24,9 @@ urlpatterns = [
     path('myvet/create/', views.MyVetCreate.as_view(), name='myvet_create'),
     path('myvet/', views.MyVetList.as_view(), name='myvet_index'),
     path('myvet/<int:pk>', views.myvet_detail, name='myvet_detail'),
+    path('myvet/<int:pk>/update/', views.MyVetUpdate.as_view(), name='myvet_update'),
+    path('myvet/<int:pk>/delete/', views.MyVetDelete.as_view(), name='myvet_delete'),
+
 
 
     

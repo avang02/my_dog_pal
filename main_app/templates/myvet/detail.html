@@ -12,6 +12,11 @@
         <p><strong>{{ myvet.dog }}</strong></p>
 
     </div>
+
+    <div class="card-actions">
+        <a href="{% url 'myvet_delete' myvet.id %}" class="btn-delete">Delete</a>
+        <a href="{% url 'myvet_update' myvet.id %}" class="btn-edit">Edit</a>
+    </div>
     
 </div>
 
