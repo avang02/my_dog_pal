@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import request
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
-from .models import Dog, DogFood, FoodTrans
+from .models import Dog, DogFood, FoodTrans, MyVet
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -126,4 +126,26 @@ class FoodTransDelete(LoginRequiredMixin, DeleteView):
 
 class FoodTransUpdate(LoginRequiredMixin, UpdateView):
     model = FoodTrans
+<<<<<<< HEAD
     fields = '__all__'
+=======
+    fields = '__all__'
+    
+
+class MyVetCreate(LoginRequiredMixin, CreateView):
+    model = MyVet
+    fields = '__all__'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+class MyVetList(LoginRequiredMixin, ListView):
+    model = MyVet
+
+def myvet_detail(request, pk):
+    myvet = MyVet.objects.get(id=pk)
+    return render(request, 'myvet/detail.html', {
+        'myvet': myvet,
+    })
+>>>>>>> main
