@@ -39,7 +39,6 @@ class FoodTrans(models.Model):
     new_food = models.CharField(max_length=50)
     meals_a_day = models.IntegerField()
     start_date = models.DateField()
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
