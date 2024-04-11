@@ -26,4 +26,5 @@ urlpatterns = [
     path('myvet/<int:pk>', views.myvet_detail, name='myvet_detail'),
 
 
+    
 ]
