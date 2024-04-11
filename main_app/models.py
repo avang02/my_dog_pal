@@ -16,7 +16,6 @@ class DogFood(models.Model):
     def get_absolute_url(self):
         return reverse('dogfood_detail', kwargs={'pk': self.id})
 
-
 class Dog(models.Model):
     name = models.CharField(max_length=50)
     breed = models.CharField(max_length=50)
@@ -27,7 +26,6 @@ class Dog(models.Model):
     dogfood = models.ManyToManyField(DogFood)
     img_url = models.URLField(null=True, blank=True)
 
-    
     def __str__(self):
         return self.name
     
@@ -46,9 +44,6 @@ class FoodTrans(models.Model):
     
     def get_absolute_url(self):
         return reverse('foodtrans_detail', kwargs={'pk':self.id})
-    
-
-
 
 class MyVet(models.Model):
     name = models.CharField(max_length=50)
