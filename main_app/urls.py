@@ -24,6 +24,9 @@ urlpatterns = [
     path('myvet/create/', views.MyVetCreate.as_view(), name='myvet_create'),
     path('myvet/', views.MyVetList.as_view(), name='myvet_index'),
     path('myvet/<int:pk>', views.myvet_detail, name='myvet_detail'),
+    path('myvet/<int:pk>/update/', views.MyVetUpdate.as_view(), name='myvet_update'),
+    path('myvet/<int:pk>/delete/', views.MyVetDelete.as_view(), name='myvet_delete'),
+
 
 
 ]
