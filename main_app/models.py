@@ -70,7 +70,9 @@ class MyVet(models.Model):
     def get_absolute_url(self):
         return reverse('myvet_detail', kwargs={'pk':self.id})
     
-class DogCalculator(models.Model):
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
-    activity = models.CharField(choices=activity)
 
+    def __str__(self):
+        return f"Photo for dog_id: {self.dog_id} @{self.url}"
