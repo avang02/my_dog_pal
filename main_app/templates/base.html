@@ -28,7 +28,6 @@
             </ul>
             <ul>
                 {% if user.is_authenticated %}
-<<<<<<< HEAD
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -40,21 +39,8 @@
                         <li><a class="dropdown-item" href="{% url 'dogfood_index' %}">View Dog Food List</a></li>
                         <li><a class="dropdown-item" href="{% url 'foodtrans_create' %}">Add Food Transition</a></li>
                         <li><a class="dropdown-item" href="{% url 'foodtrans_index' %}">View Transition</a></li>
-=======
-                <li><a href="/dogs">My Dogs</a></li>
-                <li><a href="{% url 'dogs_create' %}">Add Dog</a></li>
-                <li><a href="{% url 'dogfood_create' %}">Add Dog Food</a></li>
-                <li><a href="{% url 'dogfood_index' %}">Dog Food List</a></li>
-                <li><a href="{% url 'foodtrans_create' %}">Add Food Transition</a></li>
-                <li><a href="{% url 'foodtrans_index' %}">Food Transition Index</a></li>
-                <li><a href="{% url 'myvet_create' %}">Add Vet</a></li>
-                <li><a href="{% url 'myvet_index' %}">Vet Index</a></li>
-              
-                    <form action="{% url 'logout' %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn">Log Out</button>
-                    </form>
->>>>>>> main
+                        <li><a href="{% url 'myvet_create' %}">Add Vet</a></li>
+                        <li><a href="{% url 'myvet_index' %}">Vet Index</a></li>
                 </li>
             </ul>
             </li>
