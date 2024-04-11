@@ -76,3 +76,7 @@ class Photo(models.Model):
 
     def __str__(self):
         return f"Photo for dog_id: {self.dog_id} @{self.url}"
+      
+class DogCalculator(models.Model):
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    activity = models.CharField(choices=activity)

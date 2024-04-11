@@ -7,7 +7,6 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
-
 import uuid
 import boto3
 import os
@@ -162,7 +161,7 @@ class MyVetDelete(LoginRequiredMixin, DeleteView):
 class MyVetUpdate(LoginRequiredMixin, UpdateView):
     model = MyVet
     fields = '__all__'
-
+    
 def secretkey(request):
   secrect_key = os.environ['SECRET_KEY']
 
@@ -185,3 +184,4 @@ def add_photo(request, dog_id):
             print('An error occurred uploading file to S3')
             print(e)
     return redirect('detail', dog_id=dog_id)
+  
