@@ -196,6 +196,17 @@ input[type="password"] {
     border-radius: 5px;
 }
 
+button.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #ffcc00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 button.btn-primary {
     display: block;
     width: 100%;
