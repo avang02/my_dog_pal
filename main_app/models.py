@@ -8,6 +8,7 @@ class DogFood(models.Model):
     name = models.CharField(max_length=50)
     kcalperserving = models.IntegerField()
     gramperserving = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
