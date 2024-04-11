@@ -148,3 +148,11 @@ def myvet_detail(request, pk):
     return render(request, 'myvet/detail.html', {
         'myvet': myvet,
     })
+
+class MyVetDelete(LoginRequiredMixin, DeleteView):
+    model =MyVet
+    success_url = '/myvet/'
+
+class MyVetUpdate(LoginRequiredMixin, UpdateView):
+    model = MyVet
+    fields = '__all__'
