@@ -49,7 +49,16 @@ class FoodTrans(models.Model):
 
 
 
+class MyVet(models.Model):
+    name = models.CharField(max_length=50)
+    clinic_name = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=20)
+    email = models.CharField(max_length=50)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
+    def __string__(self):
+        return self.name
 
-
+    def get_absolute_url(self):
+        return reverse('myvet_detail', kwargs={'pk':self.id})
 
