@@ -3,20 +3,22 @@
 
 <h1>Dog List</h1>
 
-<div class="card-container">
+<div class="dog-card-container">
     {% for dog in dogs %}
         <a href="{% url 'detail' dog.id %}" class="card-link">
             <div class="card">
+                {% if dog.img_url %}
+                    <img src="{{ dog.img_url }}" alt="">
+                {% else %}
+                    <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo">
+                {% endif %}
                 <div class="card-content">
-                    <span class="card-title">{{ dog.name }}</span>
-                    <p>Breed: {{ dog.breed }}</p>
-                    <p>Neutered/Spayed: {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
-                    <p>Weight: {{ dog.weight }}</p>
-                    <p>Birthdate: {{ dog.birthdate }}</p>
+                    <span class="card-title big">{{ dog.name }}</span>
                 </div>
             </div>
         </a>
     {% endfor %}
 </div>
+
 
 {% endblock %}
