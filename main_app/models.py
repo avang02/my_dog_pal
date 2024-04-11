@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 
 class DogFood(models.Model):
@@ -38,6 +39,7 @@ class FoodTrans(models.Model):
     new_food = models.CharField(max_length=50)
     meals_a_day = models.IntegerField()
     start_date = models.DateField()
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
