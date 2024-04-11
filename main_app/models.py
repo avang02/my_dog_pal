@@ -50,7 +50,6 @@ class FoodTrans(models.Model):
     new_food = models.CharField(max_length=50)
     meals_a_day = models.IntegerField()
     start_date = models.DateField()
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -71,7 +70,13 @@ class MyVet(models.Model):
     def get_absolute_url(self):
         return reverse('myvet_detail', kwargs={'pk':self.id})
     
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for dog_id: {self.dog_id} @{self.url}"
+      
 class DogCalculator(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     activity = models.CharField(choices=activity)
-
