@@ -29,7 +29,34 @@
             <ul>
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Dog
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for dog in dogs %}
+                        <a class="dropdown-item" href="{% url 'detail' dog.id %}">{{ dog.name }}</a>
+                        {% endfor %}
+                        <a class="dropdown-item" href="/dogs">Show All My Dogs</a>
+                        <a class="dropdown-item" href="{% url 'dogs_create' %}">Add Dog</a>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Vet
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                        <li><a class="dropdown-item" href="{% url 'myvet_create' %}">Add Vet</a></li>
+                       <li><a class="dropdown-item" href="{% url 'myvet_index' %}">Vet Index</a></li>
+                    </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Food
                     </a>
@@ -39,25 +66,11 @@
                         <li><a class="dropdown-item" href="{% url 'dogfood_index' %}">View Dog Food List</a></li>
                         <li><a class="dropdown-item" href="{% url 'foodtrans_create' %}">Add Food Transition</a></li>
                         <li><a class="dropdown-item" href="{% url 'foodtrans_index' %}">View Transition</a></li>
-                        <li><a href="{% url 'myvet_create' %}">Add Vet</a></li>
-                        <li><a href="{% url 'myvet_index' %}">Vet Index</a></li>
                 </li>
             </ul>
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    My Dogs
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {% for dog in dogs %}
-                    <a class="dropdown-item" href="{% url 'detail' dog.id %}">{{ dog.name }}</a>
-                    {% endfor %}
-                    <a class="dropdown-item" href="/dogs">Show All My Dogs</a>
-                    <a class="dropdown-item" href="{% url 'dogs_create' %}">Add Dog</a>
-                </ul>
-            </li>
+           
             <li>
                 <form action="{% url 'logout' %}" method="POST">
                     {% csrf_token %}

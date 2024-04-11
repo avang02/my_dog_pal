@@ -17,37 +17,29 @@
         <a href="{% url 'dogs_update' dog.id %}" class="btn-edit">Edit</a>
     </div>
     <hr>
-    <div class="row">
-      <div class="col s6">
-        <h3>{{ dog.name }}'s Dogfood</h3>
+        <h3>Food</h3>
         {% if dog.dogfood.count %}
           {% for food in dog.dogfood.all %}
-            <div class="card">
-              <div class="card-content">
-                <span class="card-title">
+               
                     <p><strong>{{ food.name }}</strong></p>
-                    <p><strong>{{ food.kcalperserving }}</strong></p>
-                    <p><strong>{{ food.gramperserving }}</strong></p>
+                    <p><strong>Caloric Content</strong></p>
+                    <p>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
                     <p><strong>{{ food.current_food }}</strong></p>
                     <p><strong>{{ food.new_food }}</strong></p>
                     <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
                         {% csrf_token %}
                         <button type="submit" class="btn">Remove</button>
                     </form>
-                </span>
-              </div>
-            </div>
+
           {% endfor %}
         {% else %}
           <h5>No Dogfood</h5>
         {% endif %}
-      </div>
-    </div>
-</div>
+
 <hr>
 
 <div class="col s6">
-  <h3>Dog Food</h3>
+  <h3>Dog Food Options</h3>
         {% if dogfood.count %}
             {% for food in dogfood %}
                 <div class="card">
