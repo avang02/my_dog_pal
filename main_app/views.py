@@ -126,11 +126,7 @@ class FoodTransDelete(LoginRequiredMixin, DeleteView):
 
 class FoodTransUpdate(LoginRequiredMixin, UpdateView):
     model = FoodTrans
-<<<<<<< HEAD
     fields = '__all__'
-=======
-    fields = '__all__'
-    
 
 class MyVetCreate(LoginRequiredMixin, CreateView):
     model = MyVet
@@ -148,4 +144,3 @@ def myvet_detail(request, pk):
     return render(request, 'myvet/detail.html', {
         'myvet': myvet,
     })
->>>>>>> main
