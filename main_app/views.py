@@ -33,7 +33,7 @@ def dogs_detail(request, dog_id):
 
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
-    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate' ]
+    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate', 'img_url' ]
     
 
     def form_valid(self, form):
@@ -127,4 +127,3 @@ class FoodTransDelete(LoginRequiredMixin, DeleteView):
 class FoodTransUpdate(LoginRequiredMixin, UpdateView):
     model = FoodTrans
     fields = '__all__'
-    

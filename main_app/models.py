@@ -9,7 +9,7 @@ class DogFood(models.Model):
     kcalperserving = models.IntegerField()
     gramperserving = models.IntegerField()
 
-    def __string__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):
@@ -24,9 +24,10 @@ class Dog(models.Model):
     birthdate = models.DateField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dogfood = models.ManyToManyField(DogFood)
+    img_url = models.URLField(null=True, blank=True)
 
     
-    def __string__(self):
+    def __str__(self):
         return self.name
     
     def get_absolute_url(self):
@@ -39,7 +40,7 @@ class FoodTrans(models.Model):
     meals_a_day = models.IntegerField()
     start_date = models.DateField()
 
-    def __string__(self):
+    def __str__(self):
         return self.name
     
     def get_absolute_url(self):

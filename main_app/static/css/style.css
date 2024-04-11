@@ -13,6 +13,7 @@ header {
 }
 
 nav {
+    background-color: #fce06f;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -45,7 +46,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #0066cc;
+    background-color: #ffcc00;
 }
 
 img {
@@ -80,16 +81,16 @@ footer {
 }
 
 .card {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    width: 300px;
+    padding: 20px;
 }
 
 .card-content {
     font-size: 16px;
-    padding: 20px;
 }
 
 .card-title {
@@ -99,21 +100,19 @@ footer {
 }
 
 .card-actions {
-    border-top: 1px solid #ddd;
     padding: 10px 20px;
+    border-top: 1px solid #e0e0e0;
     display: flex;
     justify-content: space-between;
 }
 
-.btn-delete,
-.btn-edit {
-    color: #fff;
+.btn-delete, .btn-edit {
+    text-decoration: none;
     padding: 8px 16px;
     border-radius: 3px;
+    color: #fff;
     cursor: pointer;
-    text-decoration: none;
 }
-
 
 .btn-delete {
     background-color: #f44336;
@@ -121,11 +120,6 @@ footer {
 
 .btn-edit {
     background-color: #2196F3;
-}
-
-.card-title {
-    font-size: 20px;
-    font-weight: bold;
 }
 
 .form-container {
@@ -157,7 +151,7 @@ select {
     border-radius: 5px;
 }
 
-button[type="submit"] {
+input[type="submit"] {
     background-color: #0066cc;
     color: #fff;
     padding: 10px 20px;
@@ -168,8 +162,9 @@ button[type="submit"] {
     transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
+input[type="submit"]:hover {
     background-color: #0050aa;
+    color: white;
 }
 
 .login-container {
@@ -214,6 +209,7 @@ button.btn-primary {
 
 button.btn-primary:hover {
     background-color: #0056b3;
+    color: white;
 }
 
 .signup-container {
@@ -263,16 +259,61 @@ button.btn-primary {
 
 button.btn-primary:hover {
     background-color: #0056b3;
+    color: white;
 }
 
-.col {
-    flex: 1;
+.navbar {
+    border-radius: 10px;
 }
 
-.row {
-    margin-bottom: 20px;
+
+a:hover {
+    color: white;
+    text-decoration: none;
 }
 
-h1 {
-    margin-bottom: 20px;
+a.dropdown-item:hover {
+    background-color: #0066cc;
+    color: white;
+}
+
+.dropdown-menu.show {
+    background-color: #ffcc00;
+}
+
+a.dropdown-item {
+    color: white;
+}
+
+.dog-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.dog-card-container .card {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.dog-card-container .card img {
+    max-width: 200px;
+    height: auto;
+}
+
+.dog-card-container .card-content {
+    margin-top: 10px;
+}
+
+.dog-card-container .card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.big {
+    font-size: 24px;
 }
