@@ -80,12 +80,12 @@ class Photo(models.Model):
 
 class DogCalculator(models.Model):
     weight = models.IntegerField('ideal weight')
-    activity = models.CharField(choices=ACTIVITY, default=ACTIVITY[0][0])
+    activity = models.FloatField(choices=ACTIVITY, default=ACTIVITY[0][0])
     servingspercup = models.IntegerField()
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.get_activity_display()} on {self.weight}"
+        return f"Activity level: {self.get_activity_display()}. Weight: {self.weight}. Servings: {self.servingspercup}"
     
 
 

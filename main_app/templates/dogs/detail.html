@@ -20,11 +20,14 @@
             <p><strong>Weight:</strong> {{ dog.weight }}</p>
             <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
             <p><strong>Calculator Weights:</strong></p>
+            {% for calculate in dog.dogcalculator_set.all %}
             <ul class="calculator-weights">
-                {% for calculator in dog.dogcalculator_set.all %}
-                <li>{{ calculator.weight }}</li>
-                {% endfor %}
+                <li>Ideal weight: <span id="weight">{{ calculate.weight }}</span></li>
+                <li>Activity level: <span id="activity">{{ calculate.activity }}</span></li>
+                <li>Servings Per Cup: <span id="servingspercup">{{ calculate.servingspercup }}</span></li>
+                <li>Food Per Day: {{calculate.kcal_per_day}}</li>
             </ul>
+            {% endfor %}
         </div>
     </div>
     <div class="card-actions">
@@ -52,29 +55,50 @@
     </div>
 </div>
 
-<div class="form-box">
-    <div class="card">
-        <h3>Dog Food Options</h3>
-        <div>
-            {% if dogfood.count %}
-            {% for food in dogfood %}
-            <div>
-                <p><strong>{{ food.name }}</strong></p>
-                <p><strong>{{ food.kcalperserving }}</strong> kcal/kg</p>
-                <p><strong>{{ food.gramperserving }}</strong> kcal/cup</p>
-                <p><strong>{{ food.current_food }}</strong></p>
-                <p><strong>{{ food.new_food }}</strong></p>
-                <form action="{% url 'assoc_dogfood' dog.id food.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn">Add</button>
-                </form>
+<hr>
+    <h3>Food</h3>
+    {% if dog.dogfood.count %}
+        {% for food in dog.dogfood.all %}
+            <p><strong>{{ food.name }}</strong></p>
+            <p><strong>Caloric Content</strong></p>
+            <p>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
+            <p><strong>{{ food.current_food }}</strong></p>
+            <p><strong>{{ food.new_food }}</strong></p>
+            <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">Remove</button>
+            </form>
+        {% endfor %}
+    {% else %}
+        <h5>No Dogfood</h5>
+    {% endif %}
+<hr>
+
+<div class="col s6">
+    <h3>Dog Food Options</h3>
+    {% if dogfood.count %}
+        {% for food in dogfood %}
+            <div class="card">
+                <div class="card-content">
+                <span class="card-title">
+                    <p><strong>{{ food.name }}</strong></p>
+                    <p><strong>{{ food.kcalperserving }}</strong></p>
+                    <p><strong>{{ food.gramperserving }}</strong></p>
+                    <p><strong>{{ food.current_food }}</strong></p>
+                    <p><strong>{{ food.new_food }}</strong></p>
+                </span>
+                <div class="card-content">
+                    <form action="{% url 'assoc_dogfood' dog.id food.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Add</button>
+                    </form>
+                </div>
             </div>
-            {% endfor %}
-            {% else %}
-            <p>No available dogfood found</p>
-            {% endif %}
-        </div>
-    </div>
+        </div>    
+    {% endfor %}
+    {% else %}
+        <p>No available dogfood found</p>
+    {% endif %}
 </div>
 
 <div class="card">
@@ -87,5 +111,6 @@
         </form>
     </div>
 </div>
+
 
 {% endblock %}

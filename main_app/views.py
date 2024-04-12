@@ -8,9 +8,12 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
+from django import template
 import uuid
 import boto3
 import os
+
+register = template.Library()
 
 # Create your views here.
 
@@ -30,12 +33,14 @@ def dogs_detail(request, dog_id):
     id_list = dog.dogfood.all().values_list('id')
     dogfood_dog_doesnt_have = DogFood.objects.exclude(id__in=id_list)
     dogcalculator_form = DogcalculatorForm()
+
     return render(request, 'dogs/detail.html', {
         'dog': dog,
         'dogfood': dogfood_dog_doesnt_have,
         'dogcalculator_form': dogcalculator_form,
     })
 
+# KcalPerDay = pow(weight, 0.75) * activity
 
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
@@ -102,6 +107,7 @@ def dogfood_detail(request, pk):
     return render(request, 'dogfood/detail.html', {
         'dogfood': dogfood,
     })
+
 
 
 @login_required
@@ -189,11 +195,15 @@ def add_photo(request, dog_id):
     return redirect('detail', dog_id=dog_id)
   
 @login_required
-def dogcalculator_create(request, dog_id):
+def dogcalculator_create(request, dog_id, self):
     form = DogcalculatorForm(request.POST)
     if form.is_valid():
         new_dogcalculator = form.save(commit=False)
         new_dogcalculator.dog_id = dog_id
         new_dogcalculator.save()
-    return redirect('detail', dog_id=dog_id)
+        kcal_per_day = pow(self.weight, 0.75) * self.activity
+    return redirect('detail', {
+        'dog_id': dog_id,
+        'kcal_per_day': kcal_per_day
+        })
 
