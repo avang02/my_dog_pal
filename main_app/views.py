@@ -2,11 +2,16 @@ from django.shortcuts import render, redirect
 from django.http import request
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
+from .models import Dog, DogFood, FoodTrans, MyVet, Photo
 from .models import Dog, DogFood, FoodTrans, MyVet, DogCalculator
+from .forms import DogcalculatorForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
+import uuid
+import boto3
+import os
 
 # Create your views here.
 
@@ -158,7 +163,36 @@ class MyVetDelete(LoginRequiredMixin, DeleteView):
 class MyVetUpdate(LoginRequiredMixin, UpdateView):
     model = MyVet
     fields = '__all__'
+    
+def secretkey(request):
+  secrect_key = os.environ['SECRET_KEY']
 
-class DogCalculatorCreate(LoginRequiredMixin, CreateView):
-    model = DogCalculator
-    fields = '__all__'
+def add_photo(request, dog_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+
+            Photo.objects.create(url=url, dog_id=dog_id)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    return redirect('detail', dog_id=dog_id)
+  
+@login_required
+def dogcalculator_create(request, dog_id):
+    form = DogcalculatorForm(request.POST)
+    if form.is_valid():
+        new_dogcalculator = form.save(commit=False)
+        new_dogcalculator.dog_id = dog_id
+        new_dogcalculator.save()
+    return redirect('detail', dog_id=dog_id)
+
