@@ -78,7 +78,7 @@ class Photo(models.Model):
         return f"Photo for dog_id: {self.dog_id} @{self.url}"
       
 class DogCalculator(models.Model):
-    weight = models.IntegerField()
+    weight = models.IntegerField('ideal weight')
     activity = models.CharField(choices=ACTIVITY, default=ACTIVITY[0][0])
     servingspercup = models.IntegerField()
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)

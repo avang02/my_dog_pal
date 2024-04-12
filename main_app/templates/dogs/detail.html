@@ -35,8 +35,7 @@
     <hr>
         <h3>Food</h3>
         {% if dog.dogfood.count %}
-          {% for food in dog.dogfood.all %}
-               
+            {% for food in dog.dogfood.all %}
                     <p><strong>{{ food.name }}</strong></p>
                     <p><strong>Caloric Content</strong></p>
                     <p>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
@@ -46,12 +45,10 @@
                         {% csrf_token %}
                         <button type="submit" class="btn">Remove</button>
                     </form>
-
-          {% endfor %}
+            {% endfor %}
         {% else %}
           <h5>No Dogfood</h5>
         {% endif %}
-
 <hr>
 
 <div class="col s6">
@@ -90,11 +87,6 @@
             </form>
         </div>
     </div>
-        
 </div>
-
-
-
-
 
 {% endblock %}

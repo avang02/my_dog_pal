@@ -98,8 +98,10 @@ class DogFoodUpdate(LoginRequiredMixin, UpdateView):
 @login_required
 def dogfood_detail(request, pk):
     dogfood = DogFood.objects.get(id=pk)
+    dogcalculator_form = DogcalculatorForm()
     return render(request, 'dogfood/detail.html', {
-        'dogfood': dogfood
+        'dogfood': dogfood,
+        'dogcalculator_form': dogcalculator_form
     })
 
 
