@@ -88,12 +88,7 @@
             {{ dogcalculator_form.as_p }}
             <input type="submit" value="Calculate" class="btn">
         </form>
-        {% for calculate in dog.dogcalculator_set.all %}
-        <tr>
-          <td>{{calculate.weight}}</td>
-          <td>{{calculate.get_activity_display}}</td>
-
     </div>
-    {% endfor %}
+</div>
 
 {% endblock %}
