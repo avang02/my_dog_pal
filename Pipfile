@@ -9,6 +9,7 @@ psycopg2-binary = "*"
 django-static-jquery = "*"
 django-environ = "*"
 boto3 = "*"
+environ = "*"
 
 [dev-packages]
 

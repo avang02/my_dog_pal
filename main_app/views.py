@@ -3,6 +3,8 @@ from django.http import request
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
 from .models import Dog, DogFood, FoodTrans, MyVet, Photo
+from .models import Dog, DogFood, FoodTrans, MyVet, DogCalculator
+from .forms import DogcalculatorForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -49,7 +51,7 @@ class DogDelete(LoginRequiredMixin, DeleteView):
 
 class DogUpdate(LoginRequiredMixin, UpdateView):
     model = Dog
-    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate']
+    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate', 'img_url']
 
 def signup(request):
     error_message=''
@@ -96,8 +98,10 @@ class DogFoodUpdate(LoginRequiredMixin, UpdateView):
 @login_required
 def dogfood_detail(request, pk):
     dogfood = DogFood.objects.get(id=pk)
+    dogcalculator_form = DogcalculatorForm()
     return render(request, 'dogfood/detail.html', {
-        'dogfood': dogfood
+        'dogfood': dogfood,
+        'dogcalculator_form': dogcalculator_form
     })
 
 
@@ -185,3 +189,12 @@ def add_photo(request, dog_id):
             print(e)
     return redirect('detail', dog_id=dog_id)
   
+@login_required
+def dogcalculator_create(request, dog_id):
+    form = DogcalculatorForm(request.POST)
+    if form.is_valid():
+        new_dogcalculator = form.save(commit=False)
+        new_dogcalculator.dog_id = dog_id
+        new_dogcalculator.save()
+    return redirect('detail', dog_id=dog_id)
+
