@@ -10,17 +10,32 @@
         <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
         <p><strong>Weight:</strong> {{ dog.weight }}</p>
         <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
-        
+        {% for calculator in dog.dogcalculator_set.all %}
+        <p><strong>{{ calculator.weight }}</strong></p>
+        {% endfor %}
     </div>
     <div class="card-actions">
         <a href="{% url 'dogs_delete' dog.id %}" class="btn-delete">Delete</a>
         <a href="{% url 'dogs_update' dog.id %}" class="btn-edit">Edit</a>
     </div>
     <hr>
+    {% for photo in dog.photo_set.all %}
+    <img class="responsive-img card-panel" src="{{photo.url}}" alt="Dog Photo">
+{% empty %}
+    <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+{% endfor %}
+
+<!-- new code below -->
+<form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+    {% csrf_token %}
+    <input type="file" name="photo-file">
+    <br><br>
+    <button type="submit" class="btn">Upload Photo</button>
+</form>
+    <hr>
         <h3>Food</h3>
         {% if dog.dogfood.count %}
-          {% for food in dog.dogfood.all %}
-               
+            {% for food in dog.dogfood.all %}
                     <p><strong>{{ food.name }}</strong></p>
                     <p><strong>Caloric Content</strong></p>
                     <p>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
@@ -30,12 +45,10 @@
                         {% csrf_token %}
                         <button type="submit" class="btn">Remove</button>
                     </form>
-
-          {% endfor %}
+            {% endfor %}
         {% else %}
           <h5>No Dogfood</h5>
         {% endif %}
-
 <hr>
 
 <div class="col s6">
@@ -63,8 +76,17 @@
         {% else %}
             <p>No available dogfood found</p>
         {% endif %}
+
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Dog Food Calculator</h2>
+            <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
+                {% csrf_token %}
+                {{ dogcalculator_form.as_p }}
+                <input type="submit" value="Calculate" class="btn">
+            </form>
+        </div>
+    </div>
 </div>
-
-
 
 {% endblock %}
