@@ -77,16 +77,23 @@
             <p>No available dogfood found</p>
         {% endif %}
 
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title">Dog Food Calculator</h2>
-            <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
-                {% csrf_token %}
-                {{ dogcalculator_form.as_p }}
-                <input type="submit" value="Calculate" class="btn">
-            </form>
-        </div>
+    
     </div>
 </div>
+<div class="card">
+    <div class="card-content">
+        <h2 class="card-title">Dog Food Calculator</h2>
+        <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
+            {% csrf_token %}
+            {{ dogcalculator_form.as_p }}
+            <input type="submit" value="Calculate" class="btn">
+        </form>
+        {% for calculate in dog.dogcalculator_set.all %}
+        <tr>
+          <td>{{calculate.weight}}</td>
+          <td>{{calculate.get_activity_display}}</td>
+
+    </div>
+    {% endfor %}
 
 {% endblock %}
