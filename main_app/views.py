@@ -101,7 +101,6 @@ def dogfood_detail(request, pk):
     dogcalculator_form = DogcalculatorForm()
     return render(request, 'dogfood/detail.html', {
         'dogfood': dogfood,
-        'dogcalculator_form': dogcalculator_form
     })
 
 
