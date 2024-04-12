@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 
 ACTIVITY = (
     (60.82, 'typical'), 
-    ( 69.18, 'active',), 
-    ('overweight', 38.77), 
-    ('high_activity', 96.92), 
-    ('senior', 49.79), 
-    ('inactive', 49.79), 
-    ('light_duty', 77.36), 
-    ('med_duty', 89.99), 
-    ('high_duty', 117.63)
+    (69.18, 'active',), 
+    (38.77, 'overweight'), 
+    (96.92, 'high_activity'), 
+    (49.79, 'senior'), 
+    (49.79, 'inactive'), 
+    (77.36, 'light_duty'), 
+    (89.99, 'med_duty'), 
+    (117.63, 'high_duty')
     )
 
 # Create your models here.
