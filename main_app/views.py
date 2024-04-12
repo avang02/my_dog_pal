@@ -93,7 +93,7 @@ class DogFoodDelete(LoginRequiredMixin, DeleteView):
 
 class DogFoodUpdate(LoginRequiredMixin, UpdateView):
     model = DogFood
-    fields = '__all__'
+    fields = ['name', 'kcalperserving', 'gramperserving']
     
 
 @login_required
