@@ -44,6 +44,7 @@ class Dog(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'dog_id':self.id})
     
+    
 class FoodTrans(models.Model):
     name = models.CharField(max_length=50)
     current_food = models.ForeignKey(DogFood, on_delete=models.CASCADE)
@@ -76,7 +77,7 @@ class Photo(models.Model):
 
     def __str__(self):
         return f"Photo for dog_id: {self.dog_id} @{self.url}"
-      
+
 class DogCalculator(models.Model):
     weight = models.IntegerField('ideal weight')
     activity = models.CharField(choices=ACTIVITY, default=ACTIVITY[0][0])
@@ -84,7 +85,8 @@ class DogCalculator(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.get_activity_display} on {self.weight}"
+        return f"{self.get_activity_display()} on {self.weight}"
+    
 
 
 

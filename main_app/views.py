@@ -99,7 +99,6 @@ class DogFoodUpdate(LoginRequiredMixin, UpdateView):
 @login_required
 def dogfood_detail(request, pk):
     dogfood = DogFood.objects.get(id=pk)
-    dogcalculator_form = DogcalculatorForm()
     return render(request, 'dogfood/detail.html', {
         'dogfood': dogfood,
     })
@@ -167,7 +166,7 @@ class MyVetUpdate(LoginRequiredMixin, UpdateView):
     fields = '__all__'
     
 def secretkey(request):
-  secrect_key = os.environ['SECRET_KEY']
+    secrect_key = os.environ['SECRET_KEY']
 
 def add_photo(request, dog_id):
     # photo-file will be the "name" attribute on the <input type="file">
