@@ -3,8 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 ACTIVITY = (
-    ('typical', 60.82), 
-    ('active', 69.18), 
+    (60.82, 'typical'), 
+    ( 69.18, 'active',), 
     ('overweight', 38.77), 
     ('high_activity', 96.92), 
     ('senior', 49.79), 
@@ -84,7 +84,7 @@ class DogCalculator(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.get_} on {self.dat}"
+        return f"{self.get_activity_display} on {self.weight}"
 
 
 
