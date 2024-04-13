@@ -195,15 +195,13 @@ def add_photo(request, dog_id):
     return redirect('detail', dog_id=dog_id)
   
 @login_required
-def dogcalculator_create(request, dog_id, self):
+def dogcalculator_create(request, dog_id):
     form = DogcalculatorForm(request.POST)
     if form.is_valid():
         new_dogcalculator = form.save(commit=False)
         new_dogcalculator.dog_id = dog_id
         new_dogcalculator.save()
-        kcal_per_day = pow(self.weight, 0.75) * self.activity
     return redirect('detail', {
         'dog_id': dog_id,
-        'kcal_per_day': kcal_per_day
         })
 
