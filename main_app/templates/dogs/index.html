@@ -1,24 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 
 <h1>Dog List</h1>
 
 <div class="dog-card-container">
     {% for dog in dogs %}
-        <a href="{% url 'detail' dog.id %}" class="card-link">
-            <div class="card">
+    <a href="{% url 'detail' dog.id %}" class="card-link">
+        <div class="card">
+            <div class="center-cropped">
                 {% if dog.img_url %}
-                    <img src="{{ dog.img_url }}" alt="">
+                <img src="{{ dog.img_url }}" alt="">
                 {% else %}
-                    <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo">
+                <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo">
                 {% endif %}
-                <div class="card-content">
-                    <span class="card-title big">{{ dog.name }}</span>
-                </div>
             </div>
-        </a>
+            <div class="card-content">
+                <span class="permanent-marker-regular">{{ dog.name }}</span>
+            </div>
+        </div>
+    </a>
     {% endfor %}
 </div>
 
+<style>
+    .center-cropped {
+        width: 232px;
+        height: 232px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .center-cropped img {
+        width: auto;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .permanent-marker-regular {
+        font-family: 'Permanent Marker', cursive, sans-serif;
+    }
+</style>
 
 {% endblock %}
