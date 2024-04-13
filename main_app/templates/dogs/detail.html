@@ -1,113 +1,193 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 
 <h1>{{ dog.name }}'s Portal</h1>
 
+<div class="side-nav">
+    <button class="hamburger" onclick="toggleNav()">☰</button>
+    <div id="navLinks" class="nav-links">
+        <a href="javascript:void(0)" onclick="showSection('photos')">Photos</a>
+        <a href="javascript:void(0)" onclick="showSection('food-options')">Dog Food Options</a>
+        <a href="javascript:void(0)" onclick="showSection('food-calculator')">Dog Food Calculator</a>
+    </div>
+</div>
 
-<div class="card">
+<div class="dog-card">
+    <span class="permanent-marker-regular">{{ dog.name }}</span>
+    <br>
     <div class="card-content">
-        <div class="profile-header">
-            <h3>{{ dog.name }}</h3>
+        <div class="center-cropped">
             {% if dog.img_url %}
-            <img src="{{ dog.img_url }}" alt="{{ dog.name }}" class="profile-image">
+            <img src="{{ dog.img_url }}" alt="{{ dog.name }}">
             {% else %}
             <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo" class="profile-image">
             {% endif %}
+
         </div>
         <div class="profile-details">
             <p><strong>Breed:</strong> {{ dog.breed }}</p>
             <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
             <p><strong>Weight:</strong> {{ dog.weight }}</p>
             <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
-            <p><strong>Calculator Weights:</strong></p>
+            {% if dog.dogcalculator_set.all %}
+            {% for calculator in dog.dogcalculator_set.all %}
+            <p><strong>Ideal Meal Per Day:</strong></p>
             <ul class="calculator-weights">
-                {% for calculator in dog.dogcalculator_set.all %}
                 <li>{{ calculator.weight }}</li>
-                {% endfor %}
             </ul>
+            {% endfor %}
+            {% else %}
+            <p></p>
+            {% endif %}
         </div>
     </div>
     <div class="card-actions">
-        <a href="{% url 'dogs_delete' dog.id %}" class="btn-delete">Delete</a>
-        <a href="{% url 'dogs_update' dog.id %}" class="btn-edit">Edit</a>
+        <a href="{% url 'dogs_delete' dog.id %}" class="btn-delete"><i class="bi bi-trash"></i> Delete</a>
+        <a href="{% url 'dogs_update' dog.id %}" class="btn-edit"><i class="bi bi-pencil"></i> Edit</a>
     </div>
-</div>
-
-<div class="form-box">
-    <div class="card">
-        <h3>Photos</h3>
-        <div class="card-content">
-            {% for photo in dog.photo_set.all %}
-            <img class="responsive-img card-panel" src="{{photo.url}}" alt="Dog Photo">
-            {% empty %}
-            <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-            {% endfor %}
-        </div>
-        <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+    <div>
+        {% if dog.dogfood.count %}
+        {% for food in dog.dogfood.all %}
+        <p><strong>{{ food.name }}</strong></p>
+        <p><strong>Caloric Content</strong></p>
+        <p>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
+        <p><strong>{{ food.current_food }}</strong></p>
+        <p><strong>{{ food.new_food }}</strong></p>
+        <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
             {% csrf_token %}
-            <input type="file" name="photo-file">
-            <br><br>
-            <button type="submit" class="btn">Upload Photo</button>
+            <button type="submit" class="btn">Remove</button>
         </form>
+        {% endfor %}
+        {% endif %}
     </div>
-</div>
+    </div>
+    
 
-<div class="form-box">
-    <div class="card">
-        <h3>Dog Food</h3>
-        <div>
-            {% if dog.dogfood.count %}
-            {% for food in dog.dogfood.all %}
-                      <p><strong>{{ food.name }}</strong></p>
-                      <p><strong>Caloric Content</strong></p>
-                      <p>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
-                      <p><strong>{{ food.current_food }}</strong></p>
-                      <p><strong>{{ food.new_food }}</strong></p>
-                      <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
-                          {% csrf_token %}
-                          <button type="submit" class="btn">Remove</button>
-                      </form>
-            {% endfor %}
-          {% else %}
-            <h5>No Dogfood</h5>
-          {% endif %}
 
-<h3>Dog Food Options</h3>
-{% if dogfood.count %}
-    {% for food in dogfood %}
-        <div class="card">
-            <div class="card-content">
-            <span class="card-title">
-                <p><strong>{{ food.name }}</strong></p>
-                <p><strong>{{ food.kcalperserving }}</strong></p>
-                <p><strong>{{ food.gramperserving }}</strong></p>
-                <p><strong>{{ food.current_food }}</strong></p>
-                <p><strong>{{ food.new_food }}</strong></p>
-            </span>
-            <div class="card-content">
-                <form action="{% url 'assoc_dogfood' dog.id food.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn">Add</button>
-                </form>
-            </div>
+    <div class="content-container">
+        <div id="photos" class="section" style="display: none;">
+            <div class="form-box">
+                <div class="card">
+                    <h3>Photos</h3>
+                    <div class="card-content">
+                        {% for photo in dog.photo_set.all %}
+                        <img class="responsive-img card-panel" src="{{photo.url}}" alt="Dog Photo">
+                        {% empty %}
+                        <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+                        {% endfor %}
+                    </div>
+                    <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST"
+                        class="card-panel">
+                        {% csrf_token %}
+                        <input type="file" name="photo-file">
+                        <br><br>
+                        <button type="submit" class="btn">Upload Photo</button>
+                    </form>
+                </div>
             </div>
         </div>
-    {% endfor %}
-{% else %}
-    <p>No available dogfood found</p>
-{% endif %}
-</div>
-
-<div class="card">
-    <h3>Dog Food Calculator</h3>
-    <div class="card-content">
-        <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
-            {% csrf_token %}
-            {{ dogcalculator_form.as_p }}
-            <input type="submit" value="Calculate" class="btn">
-        </form>
     </div>
-</div>
+
+    <div class="content-container">
+        <div id="food-options" class="section" style="display: none;">
+            <div class="form-box">
+                <div class="card">
+                    <h3>Dog Food Options</h3>
+                    <div>
+                        {% if dogfood.count %}
+                        {% for food in dogfood %}
+                        <div>
+                            <p><strong>{{ food.name }}</strong></p>
+                            <p><strong>{{ food.kcalperserving }}</strong> kcal/kg</p>
+                            <p><strong>{{ food.gramperserving }}</strong> kcal/cup</p>
+                            <p><strong>{{ food.current_food }}</strong></p>
+                            <p><strong>{{ food.new_food }}</strong></p>
+                            <form action="{% url 'assoc_dogfood' dog.id food.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Add</button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p>No available dogfood found</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <div id="food-calculator" class="section" style="display: none;">
+            <div class="card">
+                <h3>Dog Food Calculator</h3>
+                <div class="card-content">
+                    <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
+                        {% csrf_token %}
+                        {{ dogcalculator_form.as_p }}
+                        <input type="submit" value="Calculate" class="btn">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleNav() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.classList.toggle("show");
+        }
+
+        function showSection(sectionId) {
+            var sectionToShow = document.getElementById(sectionId);
+            var isDisplayed = window.getComputedStyle(sectionToShow).display !== 'none';
+
+            sectionToShow.style.display = isDisplayed ? 'none' : 'block';
+        }
+    </script>
+
+    <style>
+        .dog-card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .center-cropped {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .center-cropped img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 4px solid #f97f2a;
+        }
+
+        .permanent-marker-regular {
+            font-family: 'Permanent Marker', cursive, sans-serif;
+        }
+
+        .profile-details {
+            margin-top: 10px;
+        }
+
+        .content-container {
+            margin-top: 20px;
+        }
+    </style>
 
 
-{% endblock %}
+    {% endblock %}
