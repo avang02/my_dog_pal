@@ -31,6 +31,7 @@ class DogFood(models.Model):
 class MyVet(models.Model):
     name = models.CharField(max_length=50)
     clinic_name = models.CharField(max_length=50)
+    preferred_doctor = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=20)
     email = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
