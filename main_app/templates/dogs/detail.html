@@ -46,6 +46,8 @@
         <a href="{% url 'dogs_delete' dog.id %}" class="btn-delete"><i class="bi bi-trash"></i> Delete</a>
         <a href="{% url 'dogs_update' dog.id %}" class="btn-edit"><i class="bi bi-pencil"></i> Edit</a>
     </div>
+    <div></div>
+    <h3>Dog Food</h3>
     <div>
         {% if dog.dogfood.count %}
         {% for food in dog.dogfood.all %}
@@ -59,11 +61,12 @@
             <button type="submit" class="btn">Remove</button>
         </form>
         {% endfor %}
+        {% else %}
+        <p></p>
+        <h5>No Dogfood</h5>
         {% endif %}
     </div>
-    </div>
-    
-
+</div>
 
     <div class="content-container">
         <div id="photos" class="section" style="display: none;">
