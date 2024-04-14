@@ -48,6 +48,7 @@ footer {
     text-align: center;
 }
 
+
 .dog-card {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
@@ -60,6 +61,8 @@ footer {
     position: relative;
     text-align: center;
 }
+
+
 
 .card-content {
     font-size: 16px;
@@ -278,12 +281,12 @@ a:hover {
     text-decoration: none;
 }
 
-.dog-card-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
+ .dog-card-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
 
 .dog-card-container .card img {
     max-width: 100%;
@@ -299,6 +302,7 @@ a:hover {
     font-weight: bold;
 }
 
+
 @media only screen and (max-width: 600px) {
 
     .container,
@@ -311,6 +315,7 @@ a:hover {
         padding: 10px;
     }
 }
+
 
 .btn-link {
     background: none;
@@ -355,16 +360,3 @@ a:hover {
 h1.flow-text.white-text{
     font-size: 4rem;
 }
-
-.permanent-marker-regular{
-    font-size: 3rem;
-}
-
-  ul {
-    height: 100%;
-    padding: 0px 5px 0px 20px;
-  }
-  
-  a {
-    color: #17a2b8;
-  }
