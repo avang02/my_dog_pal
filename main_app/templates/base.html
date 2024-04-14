@@ -24,7 +24,8 @@
             background-color: #ffa149 !important;
         }
 
-        .dropdown-content li>a, .dropdown-content li>span {
+        .dropdown-content li>a,
+        .dropdown-content li>span {
             font-size: 16px;
             color: #fa802b;
             display: block;
@@ -34,12 +35,12 @@
 
         .dropdown-content li>a:hover {
             background-color: #fa802b;
-            color:white;
+            color: white;
         }
 
         .nav-wrapper.a:hover {
-             color: #0e81ad !important;
-}
+            color: #0e81ad !important;
+        }
     </style>
 </head>
 
@@ -48,8 +49,8 @@
         <div class="trasparentBG">
             <nav class="transparent">
                 <div class="nav-wrapper">
-                    <a href="/" class="brand-logo"><img src="{% static 'images/DogPalLogostrokepng.png'%}"
-                            alt="logo" width="60px"></a>
+                    <a href="/" class="brand-logo"><img src="{% static 'images/DogPalLogostrokepng.png'%}" alt="logo"
+                            width="60px"></a>
                     {% if user.is_authenticated %}
                     <ul class="right hide-on-med-and-down">
                         <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i
@@ -100,9 +101,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-            function submitForm() {
-                document.getElementById('logout-form').submit();
-            }
+        function submitForm() {
+            document.getElementById('logout-form').submit();
+        }
     </script>
 
 </body>

@@ -3,21 +3,18 @@
 {% load static %}
 
 
-<ul id="slide-out" class="sidenav" width="400px">
+<ul id="slide-out" class="sidenav" width="00px">
     <li><div>
         <img src="{% static 'images/DogTools.png' %}" width="200px">
     </div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
+    <li><a href="#!"><i class="material-icons left">lunch_dining</i>Dog Food</a></li>
+    <li><a href="#!"><i class="material-icons left">calculate</i>Calculator</a></li>
+    <li><a href="#!"><i class="material-icons left">sync_alt</i>Transition</a></li>
+    <li><a href="#!"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
+    <li><a href="#!"><i class="material-icons">collections</i>Gallery</a></li>
     <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader"><i class="material-icons">settings_applications</i>Settings</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="{% url 'dogs_update' dog.id %}">Edit</a></li>
-    <li><a href="{% url 'dogs_delete' dog.id %}">Delete</a></li>
+    <li><a href="{% url 'dogs_update' dog.id %}"><i class="material-icons">edit</i>Edit</a></li>
+    <li><a href="{% url 'dogs_delete' dog.id %}"><i class="material-icons">delete_forever</i>Delete</a></li>
   </ul>
   <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="large material-icons">menu</i></a>
 
@@ -51,13 +48,12 @@
         </div>
     </div>
     <div></div>
-    <h3>Dog Food</h3>
     <div>
         {% if dog.dogfood.count %}
         {% for food in dog.dogfood.all %}
-        <p><strong>{{ food.name }}</strong></p>
-        <p><strong>Caloric Content</strong></p>
-        <p>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
+        <hr>
+        <p><strong>Current Food: </strong>{{ food.name }}</p>
+        <p><strong>Caloric Content:</strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
         <p><strong>{{ food.current_food }}</strong></p>
         <p><strong>{{ food.new_food }}</strong></p>
         <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
@@ -179,6 +175,11 @@
 
     .content-container {
         margin-top: 20px;
+    }
+
+    sidenav a:hover {
+        background-color: #f97f2a;
+         color: white;
     }
 </style>
 
