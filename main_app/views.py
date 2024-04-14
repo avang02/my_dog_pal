@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import request
+from django.http import request, HttpResponse
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
 from .models import Dog, DogFood, FoodTrans, MyVet, Photo
@@ -191,4 +191,7 @@ def dogcalculator_create(request, dog_id):
     return redirect('detail', {
         'dog_id': dog_id,
     })
+
+
+
 

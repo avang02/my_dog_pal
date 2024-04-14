@@ -21,9 +21,3 @@
 
 {% endblock %}
 
-
-name = models.CharField(max_length=50)
-current_food = models.ForeignKey(DogFood, on_delete=models.CASCADE)
-new_food = models.CharField(max_length=50)
-meals_a_day = models.IntegerField()
-start_date = models.DateField()

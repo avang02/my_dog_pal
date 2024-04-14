@@ -28,4 +28,5 @@ urlpatterns = [
     path('myvet/<int:pk>/delete/', views.MyVetDelete.as_view(), name='myvet_delete'),
     path('dogs/<int:dog_id>/dogcalculator_create/', views.dogcalculator_create, name='dogcalculator_create'),
     path('dogs/<int:dog_id>/add_photo/', views.add_photo, name='add_photo'),
+
 ]

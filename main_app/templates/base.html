@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,10 +38,9 @@
 
         .nav-wrapper.a:hover {
              color: #0e81ad !important;
-}
-    </style>
+        }
+   </style>
 </head>
-
 <body>
     <header>
         <div class="trasparentBG">
@@ -92,6 +90,45 @@
             </nav>
         </div>
 
+                </li>                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Vet
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                        <li><a class="dropdown-item" href="{% url 'myvet_create' %}">Add Vet</a></li>
+                       <li><a class="dropdown-item" href="{% url 'myvet_index' %}">Vet Index</a></li>
+                    </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Food
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li>
+                      <li><a class="dropdown-item" href="{% url 'dogfood_create' %}">Add Dog Food</a></li>
+                      <li><a class="dropdown-item" href="{% url 'dogfood_index' %}">View Dog Food List</a></li>
+                      <li><a class="dropdown-item" href="{% url 'foodtrans_create' %}">Add Food Transition</a></li>
+                      <li><a class="dropdown-item" href="{% url 'foodtrans_index' %}">View Transition</a></li>
+                </li>
+            </ul>
+            </li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-link">Log Out</button>
+                </form>                
+            </li>
+            {% else %}
+            <li><a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a></li>
+            <li><a href="{% url 'login' %}" class="btn btn-primary">Log In</a></li>
+            {% endif %}
+            </ul>
+        </nav>
     </header>
     <main>
         {% block content %}
@@ -106,5 +143,4 @@
     </script>
 
 </body>
-
 </html>
