@@ -60,6 +60,7 @@ class Dog(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'dog_id':self.id})
     
+    
 class FoodTrans(models.Model):
     name = models.CharField(max_length=50)
     current_food = models.ForeignKey(DogFood, on_delete=models.CASCADE)
@@ -84,14 +85,18 @@ class Photo(models.Model):
         return f"Photo for dog_id: {self.dog_id} @{self.url}"
 
 class DogCalculator(models.Model):
-    weight = models.IntegerField('ideal weight')
+
+    ideal_weight = models.IntegerField('ideal weight')
     activity = models.FloatField(choices=ACTIVITY, default=ACTIVITY[0][0])
     servingspercup = models.IntegerField()
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Activity level: {self.get_activity_display()}. Weight: {self.weight}. Servings: {self.servingspercup}"
+        return f"Activity level: {self.get_activity_display()}. Weight: {self.ideal_weight}. Servings: {self.servingspercup}"
+    
+    def calories_per_day(self):
+        return pow(self.ideal_weight, 0.75) * self.activity
     
 
 

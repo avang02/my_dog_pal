@@ -333,6 +333,13 @@ a:hover {
     width: 200px !important;
 }
 
+sidenav li.a:hover {
+    background-color: #f97f2a;
+    color: white;
+}
+
+
+
 .permanent-marker-regular{
     font-size: 3rem;
 }

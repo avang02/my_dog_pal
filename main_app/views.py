@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import request, HttpResponse
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
-from .models import Dog, DogFood, FoodTrans, MyVet, Photo
+from .models import Dog, DogFood, FoodTrans, MyVet, Photo, DogCalculator
 from .forms import DogcalculatorForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -191,6 +191,14 @@ def dogcalculator_create(request, dog_id):
     return redirect('detail', {
         'dog_id': dog_id,
     })
+
+class CalculatorCreate(LoginRequiredMixin, CreateView):
+    model = DogCalculator
+    fields = '__all__'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 

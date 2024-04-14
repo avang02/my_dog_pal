@@ -3,23 +3,20 @@
 {% load static %}
 
 
-<ul id="slide-out" class="sidenav" width="400px">
+<ul id="slide-out" class="sidenav" width="00px">
     <li><div>
         <img src="{% static 'images/DogTools.png' %}" width="200px">
     </div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
+    <li><a href="#!"><i class="material-icons left">lunch_dining</i>Dog Food</a></li>
+    <li><a href="#!"><i class="material-icons left">calculate</i>Calculator</a></li>
+    <li><a href="#!"><i class="material-icons left">sync_alt</i>Transition</a></li>
+    <li><a href="#!"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
+    <li><a href="#!"><i class="material-icons">collections</i>Gallery</a></li>
     <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader"><i class="material-icons">settings_applications</i>Settings</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="{% url 'dogs_update' dog.id %}">Edit</a></li>
-    <li><a href="{% url 'dogs_delete' dog.id %}">Delete</a></li>
-</ul>
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="large material-icons">menu</i></a>
+    <li><a href="{% url 'dogs_update' dog.id %}"><i class="material-icons">edit</i>Edit</a></li>
+    <li><a href="{% url 'dogs_delete' dog.id %}"><i class="material-icons">delete_forever</i>Delete</a></li>
+  </ul>
+  <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="large material-icons">menu</i></a>
 
 <div class="dog-card">
     <span class="permanent-marker-regular">{{ dog.name }}</span>
@@ -44,20 +41,19 @@
                 <li>Ideal weight: <span id="weight">{{ calculate.weight }}</span></li>
                 <li>Activity level: <span id="activity">{{ calculate.activity }}</span></li>
                 <li>Servings Per Cup: <span id="servingspercup">{{ calculate.servingspercup }}</span></li>
-                <li>Food Per Day: </li>
+                <li>Food Per Day: {{ calculate.calories_per_day }}</li>
             </ul>
             {% endfor %}
             {% endif %}
         </div>
     </div>
     <div></div>
-    <h3>Dog Food</h3>
     <div>
         {% if dog.dogfood.count %}
         {% for food in dog.dogfood.all %}
-        <p><strong>{{ food.name }}</strong></p>
-        <p><strong>Caloric Content</strong></p>
-        <p>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
+        <hr>
+        <p><strong>Current Food: </strong>{{ food.name }}</p>
+        <p><strong>Caloric Content:</strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
         <p><strong>{{ food.current_food }}</strong></p>
         <p><strong>{{ food.new_food }}</strong></p>
         <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
@@ -126,13 +122,13 @@
 </div>
 
 <div class="content-container">
-    <div id="food-calculator" class="section" style="display: none;">
+    <div id="food-calculator" class="section">
         <div class="card">
             <h3>Dog Food Calculator</h3>
             <div class="card-content">
                 <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
                     {% csrf_token %}
-                    {{ dogcalculator_form.as_p }}
+                    {{ dogcalculator_form.as_table }}
                     <input type="submit" value="Calculate" class="btn">
                 </form>
             </div>
@@ -180,6 +176,11 @@
     .content-container {
         margin-top: 20px;
     }
+
+    sidenav a:hover {
+        background-color: #f97f2a;
+         color: white;
+    }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -188,6 +189,12 @@
     $(function() {
         $('.sidenav').sidenav();
     });
+
+    const weight = document.getElementById()
+
+    function dog_calculate(weight, activity) {
+        return pow(weight, 0.75) * activity
+    }
 </script>
 
 

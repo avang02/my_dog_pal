@@ -4,4 +4,6 @@ from .models import DogCalculator
 class DogcalculatorForm(ModelForm):
     class Meta:
         model = DogCalculator
-        fields = ['weight', 'activity', 'servingspercup']
+        fields = ['ideal_weight', 'activity', 'servingspercup']
+
+    

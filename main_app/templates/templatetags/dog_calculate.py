@@ -2,9 +2,9 @@ from django import template
 
 register = template.Library()
 
-@register.filter
-def dog_calculate(weight):
-    return pow(weight, 0.75)
+@register.simple_tag
+def dog_calculate(weight, activity):
+    return pow(weight, 0.75)*activity
 
 # @register.filter
 # def calculate(rounded):
