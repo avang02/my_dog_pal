@@ -10,12 +10,12 @@
         <p><strong>New Food: {{ foodtrans.new_food }}</strong></p>
         <p><strong>Meals Per Day: {{ foodtrans.meals_a_day }}</strong></p>
         <p><strong>Start Date: {{ foodtrans.start_date }}</strong></p>
-
     </div>
     <div class="card-actions">
         <a href="{% url 'foodtrans_delete' foodtrans.id %}" class="btn-delete">Delete</a>
         <a href="{% url 'foodtrans_update' foodtrans.id %}" class="btn-edit">Edit</a>
     </div>
 </div>
+
 
 {% endblock %}
