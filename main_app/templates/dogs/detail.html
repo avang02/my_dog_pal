@@ -2,158 +2,187 @@
 {% block content %}
 {% load static %}
 
-
-<ul id="slide-out" class="sidenav" width="00px">
-    <li><div>
-        <img src="{% static 'images/DogTools.png' %}" width="200px">
-    </div></li>
-    <li><a href="#!"><i class="material-icons left">lunch_dining</i>Dog Food</a></li>
-    <li><a href="#!"><i class="material-icons left">calculate</i>Calculator</a></li>
-    <li><a href="#!"><i class="material-icons left">sync_alt</i>Transition</a></li>
-    <li><a href="#!"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
-    <li><a href="#!"><i class="material-icons">collections</i>Gallery</a></li>
-    <li><div class="divider"></div></li>
+<main>
+<ul id="slide-out" class="sidenav" width="300px">
+    <li>
+        <div>
+            <img src="{% static 'images/DogTools.png' %}" width="200px">
+        </div>
+    </li>
+    <li><a href="#food-options-modal" class="modal-trigger"><i class="material-icons left">lunch_dining</i>Dog Food</a></li>
+    <li><a href="#food-calculator-modal" class="modal-trigger"><i class="material-icons left">calculate</i>Calculator</a></li>
+    <li><a href="#"><i class="material-icons left">sync_alt</i>Transition</a></li>
+    <li><a href="#photos-modal" class="modal-trigger"><i class="material-icons">collections</i>Gallery</a></li>
+    <li><a href="#add-photos"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
+    <li>
+        <div class="divider"></div>
+    </li>
     <li><a href="{% url 'dogs_update' dog.id %}"><i class="material-icons">edit</i>Edit</a></li>
     <li><a href="{% url 'dogs_delete' dog.id %}"><i class="material-icons">delete_forever</i>Delete</a></li>
-  </ul>
-  <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="large material-icons">menu</i></a>
+</ul>
+<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="medium material-icons">menu</i></a>
 
-<div class="dog-card">
-    <span class="permanent-marker-regular">{{ dog.name }}</span>
-    <br>
-    <div class="card-content">
-        <div class="center-cropped">
-            {% if dog.img_url %}
-            <img src="{{ dog.img_url }}" alt="{{ dog.name }}">
-            {% else %}
-            <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo" class="profile-image">
-            {% endif %}
-        </div>
-        <div class="profile-details">
-            <p><strong>Breed:</strong> {{ dog.breed }}</p>
-            <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
-            <p><strong>Weight:</strong> {{ dog.weight }}</p>
-            <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
-            {% if dog.dogcalculator_set.all %}
-            <p><strong>Ideal Meal Per Day:</strong></p>
-            {% for calculate in dog.dogcalculator_set.all %}
-            <ul class="calculator-weights">
-                <li>Ideal weight: <span id="weight">{{ calculate.weight }}</span></li>
-                <li>Activity level: <span id="activity">{{ calculate.activity }}</span></li>
-                <li>Servings Per Cup: <span id="servingspercup">{{ calculate.servingspercup }}</span></li>
-                <li>Food Per Day: </li>
-            </ul>
-            {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-    <div></div>
-    <div>
-        {% if dog.dogfood.count %}
-        {% for food in dog.dogfood.all %}
-        <hr>
-        <p><strong>Current Food: </strong>{{ food.name }}</p>
-        <p><strong>Caloric Content:</strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
-        <p><strong>{{ food.current_food }}</strong></p>
-        <p><strong>{{ food.new_food }}</strong></p>
-        <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
-            {% csrf_token %}
-            <button type="submit" class="btn">Remove</button>
-        </form>
-        {% endfor %}
-        {% else %}
-        <p></p>
-        <h5>No Dogfood</h5>
-        {% endif %}
-    </div>
-</div>
-
-<div class="content-container">
-    <div id="photos" class="section" style="display: none;">
-        <div class="form-box">
-            <div class="card">
-                <h3>Photos</h3>
-                <div class="card-content">
-                    {% for photo in dog.photo_set.all %}
-                    <img class="responsive-img card-panel" src="{{photo.url}}" alt="Dog Photo">
-                    {% empty %}
-                    <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-                    {% endfor %}
+    <div class="container">
+        <div class="masonry row" style="position: relative; height: 2140.9;">
+            <div class="col 13 m6 s12">
+                <div class="dog-card">
+                    <div class="card-content">
+                        <span class="permanent-marker-regular card-title">{{ dog.name }}</span>
+                        <div class="card-content">
+                            <div class="center-cropped">
+                                {% if dog.img_url %}
+                                <img src="{{ dog.img_url }}" alt="{{ dog.name }}">
+                                {% else %}
+                                <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo" class="profile-image">
+                                {% endif %}
+                            </div>
+                            <p><strong>Breed:</strong> {{ dog.breed }}</p>
+                            <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
+                            <p><strong>Weight:</strong> {{ dog.weight }}</p>
+                            <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
+                            {% if dog.dogcalculator_set.all %}
+                            <p><strong>Ideal Meal Per Day:</strong></p>
+                            {% for calculate in dog.dogcalculator_set.all %}
+                            <ul class="calculator-weights">
+                                <li>Ideal weight: <span id="weight">{{ calculate.weight }}</span></li>
+                                <li>Activity level: <span id="activity">{{ calculate.activity }}</span></li>
+                                <li>Servings Per Cup: <span id="servingspercup">{{ calculate.servingspercup }}</span></li>
+                                <li>Food Per Day: </li>
+                            </ul>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if dog.dogfood.count %}
+                            {% for food in dog.dogfood.all %}
+                            <p><strong>Current Food: </strong>{{ food.name }}</p>
+                            <p><strong>Caloric Content: </strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup
+                            </p>
+                            <p><strong>{{ food.current_food }}</strong></p>
+                            <p><strong>{{ food.new_food }}</strong></p>
+                            <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Remove</button>
+                            </form>
+                            {% endfor %}
+                            {% else %}
+                            <h5>No Dogfood</h5>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-                <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST"
-                    class="card-panel">
-                    {% csrf_token %}
-                    <input type="file" name="photo-file">
-                    <br><br>
-                    <button type="submit" class="btn">Upload Photo</button>
-                </form>
             </div>
-        </div>
-    </div>
-</div>
 
-<div class="content-container">
-    <div id="food-options" class="section" style="display: none;">
-        <div class="form-box">
-            <div class="card">
-                <h3>Dog Food Options</h3>
-                <div>
-                    {% if dogfood.count %}
-                    {% for food in dogfood %}
+            <div id="food-options-modal" class="modal">
+                <div class="modal-content">
+                    <h3>Dog Food Options</h3>
                     <div>
-                        <p><strong>{{ food.name }}</strong></p>
-                        <p><strong>{{ food.kcalperserving }}</strong> kcal/kg</p>
-                        <p><strong>{{ food.gramperserving }}</strong> kcal/cup</p>
-                        <p><strong>{{ food.current_food }}</strong></p>
-                        <p><strong>{{ food.new_food }}</strong></p>
-                        <form action="{% url 'assoc_dogfood' dog.id food.id %}">
+                        <table class="highlight">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>kcal per serving (kg)</th>
+                                    <th>kcal per serving (cup)</th>
+                                    <th>Current Food</th>
+                                    <th>New Food</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if dogfood.count %}
+                                {% for food in dogfood %}
+                                <tr>
+                                    <td>{{ food.name }}</td>
+                                    <td>{{ food.kcalperserving }}</td>
+                                    <td>{{ food.gramperserving }}</td>
+                                    <td>{{ food.current_food }}</td>
+                                    <td>{{ food.new_food }}</td>
+                                    <td>
+                                        <form action="{% url 'assoc_dogfood' dog.id food.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="orange">Add</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="6">No available dog food found</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
+                </div>
+            </div>
+            
+                <div id="food-calculator-modal" class="modal">
+                    <div class="modal-content">
+                        <h3>Dog Food Calculator</h3>
+                        <div class="card-content">
+                            <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
+                                {% csrf_token %}
+                                {{ dogcalculator_form.as_p }}
+                                <input type="submit" value="Calculate" class="btn">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
+                    </div>
+                </div>
+
+                <div id="photos-modal" class="modal">
+                    <div class="modal-content">
+                        <h3>{{ dog.name }}'s Photo Gallery</h3>
+                        <div class="card-content">
+                            {% for photo in dog.photo_set.all %}
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="{{photo.url}}" alt="Dog Photo" width="100px"> 
+                                    <span class="card-title">{{ photo.title }}</span>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col s12">
+                                <p>No photos uploaded</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+
+                <div id="add-photos" class="section" style="display: none;">
+                    <div class="card">
+                        <h3>Add Photos</h3>
+                        <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
                             {% csrf_token %}
-                            <button type="submit" class="btn">Add</button>
+                            <input type="file" name="photo-file">
+                            <br><br>
+                            <button type="submit" class="btn">Upload Photo</button>
                         </form>
                     </div>
-                    {% endfor %}
-                    {% else %}
-                    <p>No available dogfood found</p>
-                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 
-<div class="content-container">
-    <div id="food-calculator" class="section" style="display: none;">
-        <div class="card">
-            <h3>Dog Food Calculator</h3>
-            <div class="card-content">
-                <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
-                    {% csrf_token %}
-                    {{ dogcalculator_form.as_p }}
-                    <input type="submit" value="Calculate" class="btn">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <style>
-    .dog-card-container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .card {
-        width: 300px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        text-align: center;
-    }
-
     .center-cropped {
-        width: 100%;
-        height: 400px;
+        width: 50%;
+        height: 50%;
         position: relative;
         overflow: hidden;
     }
@@ -169,28 +198,27 @@
         font-family: 'Permanent Marker', cursive, sans-serif;
     }
 
-    .profile-details {
-        margin-top: 10px;
-    }
-
-    .content-container {
-        margin-top: 20px;
-    }
-
-    sidenav a:hover {
+    .sidenav li a:hover {
         background-color: #f97f2a;
-         color: white;
+        color: white !important;
     }
 </style>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
-    $(function() {
-        $('.sidenav').sidenav();
+    document.addEventListener('DOMContentLoaded', function () {
+        const modals = document.querySelectorAll('.modal');
+        M.Modal.init(modals, {
+            opacity: 0.5,
+            dismissible: false
+        });
+
+        const elems = document.querySelectorAll('.sidenav');
+        const instances = M.Sidenav.init(elems, {
+            edge: 'left',
+            draggable: false 
+        });
     });
 </script>
-
 
 
 {% endblock %}
