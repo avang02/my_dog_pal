@@ -89,34 +89,6 @@
                 </div>
             </nav>
         </div>
-
-                </li>                
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Vet
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                        <li><a class="dropdown-item" href="{% url 'myvet_create' %}">Add Vet</a></li>
-                       <li><a class="dropdown-item" href="{% url 'myvet_index' %}">Vet Index</a></li>
-                    </li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Food
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li>
-                      <li><a class="dropdown-item" href="{% url 'dogfood_create' %}">Add Dog Food</a></li>
-                      <li><a class="dropdown-item" href="{% url 'dogfood_index' %}">View Dog Food List</a></li>
-                      <li><a class="dropdown-item" href="{% url 'foodtrans_create' %}">Add Food Transition</a></li>
-                      <li><a class="dropdown-item" href="{% url 'foodtrans_index' %}">View Transition</a></li>
-                </li>
-            </ul>
-            </li>
             <li>
                 <form action="{% url 'logout' %}" method="POST">
                     {% csrf_token %}
