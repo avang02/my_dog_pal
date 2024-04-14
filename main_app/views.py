@@ -180,7 +180,7 @@ def add_photo(request, dog_id):
             print('An error occurred uploading file to S3')
             print(e)
     return redirect('detail', dog_id=dog_id)
-  
+
 @login_required
 def dogcalculator_create(request, dog_id):
     form = DogcalculatorForm(request.POST)
@@ -191,6 +191,8 @@ def dogcalculator_create(request, dog_id):
     return redirect('detail', {
         'dog_id': dog_id,
     })
+
+
 
 
 

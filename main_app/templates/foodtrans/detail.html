@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 
 <h1>Dog Food Transition Plan</h1>
 
@@ -14,6 +15,17 @@
     <div class="card-actions">
         <a href="{% url 'foodtrans_delete' foodtrans.id %}" class="btn-delete">Delete</a>
         <a href="{% url 'foodtrans_update' foodtrans.id %}" class="btn-edit">Edit</a>
+    </div>
+</div>
+<div class="card">
+    <div class="card-content" >
+        <h2 class="card-title">Food Transition</h2>
+        <div>
+            <p><strong><img src="{% static 'images/days1-3.jpg' %}"> 75% {{ foodtrans.current_food }} | 25% {{ foodtrans.new_food }}</strong></p>
+            <p><strong><img src="{% static 'images/days4-6.jpg' %}"> 50% {{ foodtrans.current_food }} | 50% {{ foodtrans.new_food }}</strong></p>
+            <p><strong><img src="{% static 'images/days7-9.jpg' %}"> 25% {{ foodtrans.current_food }} | 75% {{ foodtrans.new_food }}</strong></p>
+            <p><strong><img src="{% static 'images/day10.jpg' %}"> 100% {{ foodtrans.new_food }}</strong></p>
+        </div>
     </div>
 </div>
 
