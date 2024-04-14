@@ -3,75 +3,12 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: none;
-    background-color: #7bacba;
     font-family: 'Poppins', 'Noto Sans', 'franklin gothic Medium', Tahoma, sans-serif;
     font-weight: 600;
-    color: white;
 }
 
-nav {
-    background-color: transparent;
-    color: white;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    font-family: 'Poppins', 'Noto Sans', 'franklin gothic Medium', Tahoma, sans-serif;
-    font-weight: 600;
-    transition: background-color .2s ease-in-out;
-    font-size: 1.4rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.nav-bar {
-    background-color: rgba(250, 128, 42, 0.5);
-}
-
-.other-page-nav {
-    background-color: #7bacba;
-}
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline-block;
-    margin-left: 20px;
-}
-
-nav ul li:first-child {
-    margin-left: 0;
-}
-
-nav ul li a {
-    color: #fea549;
-    text-decoration: none;
-    padding: 10px;
-    transition: background-color 0.3s ease;
-}
-
-nav ul li a:hover {
-    color: #fd832e;
-    transform: scale(1.2);
-}
-
-.logo img {
-    max-width: 50px;
-}
-
-.container {
-    background-color: #fea046;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    text-align: center;
+.nav-wrapper {
+    background-color: #7bacba !important;
 }
 
 main {
@@ -339,36 +276,10 @@ button.btn-primary:hover {
     border-radius: 10px;
 }
 
-
 a:hover {
-    color: white;
+    color: #f97f2a;
     text-decoration: none;
 }
-
-a.dropdown-item {
-    color: white;
-}
-
-a.dropdown-item:hover {
-    background-color: #0d80ac;
-    color: white;
-}
-
-.dropdown-menu.show {
-    background-color: #fd832e;
-}
-
-a.special-item {
-    background-color: #0050aa;
-    color: white;
-    display: block;
-}
-
-a.special-item:hover {
-    background-color: #0d80ac;
-    color: white;
-}
-
 
  .dog-card-container {
         display: flex;
@@ -417,52 +328,35 @@ a.special-item:hover {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.dropdown-menu {
-    min-width: 200px;
-}
-
-.side-nav {
-    position: fixed;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    z-index: 9999;
-}
-
-.hamburger {
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    font-size: 5rem;
-    padding: 10px;
-    color: #f97f2a;
-    position: relative;
-    z-index: 10000;
-}
-
-.nav-links {
-    display: none;
-    list-style-type: none;
-    padding: 0;
-}
-
-.nav-links a {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: white;
-    background-color: #f97f2a;
-}
-
-.nav-links a:hover {
-    background-color: #0050aa;
-    color: white;
-}
-
-.nav-links.show {
-    display: block;
+.sidenav {
+    background-color: #307f98 !important;
+    width: 200px !important;
 }
 
 .permanent-marker-regular{
     font-size: 3rem;
+}
+
+.dropdown-content {
+    background-color: #FFFFFF;
+    margin: 0;
+    display: none;
+    min-width: 300px;
+    max-height: auto;
+    margin-left: -1px;
+    overflow: hidden;
+    opacity: 0;
+    position: absolute;
+    white-space: nowrap;
+    z-index: 1;
+    will-change: width, height;
+  }
+
+
+.middle-section.left-align.py-5{
+    width: 1px
+}
+
+h1.flow-text.white-text{
+    font-size: 4rem;
 }

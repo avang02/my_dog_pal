@@ -12,7 +12,20 @@ import uuid
 import boto3
 import os
 
-# Create your views here.
+def signup(request):
+    error_message=''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            error_message = 'Invalid sign up - try again'
+
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)
 
 def home(request):
     return render(request, 'home.html')
@@ -36,12 +49,9 @@ def dogs_detail(request, dog_id):
         'dogcalculator_form': dogcalculator_form,
     })
 
-
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
-    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate', 'img_url' ]
-    
-
+    fields = ['name', 'id_number', 'breed', 'neutered_spayed', 'weight', 'birthdate', 'img_url']
     def form_valid(self, form):
         form.instance.user = self.request.user  
         return super().form_valid(form)
@@ -52,23 +62,14 @@ class DogDelete(LoginRequiredMixin, DeleteView):
 
 class DogUpdate(LoginRequiredMixin, UpdateView):
     model = Dog
-    fields = ['name', 'breed', 'neutered_spayed', 'weight', 'birthdate', 'img_url']
+    fields = ['name', 'id_number', 'breed', 'neutered_spayed', 'weight', 'birthdate', 'img_url']
 
-def signup(request):
-    error_message=''
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-
-            login(request, user)
-            return redirect('index')
-        else:
-            error_message = 'Invalid sign up - try again'
-
-    form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
-    return render(request, 'registration/signup.html', context)
+@login_required
+def dogfood_index(request):
+    dogfood = DogFood.objects.filter(user=request.user)
+    return render(request, 'dogfood/index.html', {
+        'dogfood': dogfood
+    })
 
 class DogFoodCreate(LoginRequiredMixin, CreateView):
     model = DogFood
@@ -77,15 +78,6 @@ class DogFoodCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-    
-# class DogFoodList(LoginRequiredMixin, ListView):
-#         model = DogFood
-@login_required
-def dogfood_index(request):
-    dogfood = DogFood.objects.filter(user=request.user)
-    return render(request, 'dogfood/index.html', {
-        'dogfood': dogfood
-    })
 
 class DogFoodDelete(LoginRequiredMixin, DeleteView):
     model = DogFood
@@ -94,7 +86,6 @@ class DogFoodDelete(LoginRequiredMixin, DeleteView):
 class DogFoodUpdate(LoginRequiredMixin, UpdateView):
     model = DogFood
     fields = ['name', 'kcalperserving', 'gramperserving']
-    
 
 @login_required
 def dogfood_detail(request, pk):
@@ -102,7 +93,6 @@ def dogfood_detail(request, pk):
     return render(request, 'dogfood/detail.html', {
         'dogfood': dogfood,
     })
-
 
 @login_required
 def assoc_dogfood(request, dog_id, dogfood_id):
@@ -114,23 +104,20 @@ def unassoc_dogfood(request, dog_id, dogfood_id):
     Dog.objects.get(id=dog_id).dogfood.remove(dogfood_id)
     return redirect('detail', dog_id=dog_id)
 
+@login_required
+def foodtrans_index(request):
+    foodtrans = FoodTrans.objects.filter(user=request.user)
+    return render(request, 'foodtrans/index.html', {
+        'foodtrans': foodtrans
+    })
+
 class FoodTransCreate(LoginRequiredMixin, CreateView):
     model = FoodTrans
-    fields = '__all__'
+    fields = ['name', 'current_food', 'new_food', 'meals_a_day', 'start_date', 'dog']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-    
-@login_required 
-def foodtrans_detail(request, pk):
-    foodtrans = FoodTrans.objects.get(id=pk)
-    return render(request, 'foodtrans/detail.html', {
-        'foodtrans': foodtrans,
-    })
-
-class FoodTransList(LoginRequiredMixin, ListView):
-    model = FoodTrans
 
 class FoodTransDelete(LoginRequiredMixin, DeleteView):
     model = FoodTrans
@@ -138,24 +125,29 @@ class FoodTransDelete(LoginRequiredMixin, DeleteView):
 
 class FoodTransUpdate(LoginRequiredMixin, UpdateView):
     model = FoodTrans
-    fields = '__all__'
+    fields = ['name', 'current_food', 'new_food', 'meals_a_day', 'start_date', 'dog']
+
+@login_required 
+def foodtrans_detail(request, pk):
+    foodtrans = FoodTrans.objects.get(id=pk)
+    return render(request, 'foodtrans/detail.html', {
+        'foodtrans': foodtrans,
+    })
+
+@login_required
+def myvet_index(request):
+    myvet = MyVet.objects.filter(user = request.user)
+    return render(request, 'myvet/index.html', {
+        'myvet': myvet
+    })
 
 class MyVetCreate(LoginRequiredMixin, CreateView):
     model = MyVet
-    fields = '__all__'
+    fields = ['name', 'clinic_name', 'phone_number', 'email']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-    
-class MyVetList(LoginRequiredMixin, ListView):
-    model = MyVet
-
-def myvet_detail(request, pk):
-    myvet = MyVet.objects.get(id=pk)
-    return render(request, 'myvet/detail.html', {
-        'myvet': myvet,
-    })
 
 class MyVetDelete(LoginRequiredMixin, DeleteView):
     model =MyVet
@@ -163,25 +155,26 @@ class MyVetDelete(LoginRequiredMixin, DeleteView):
 
 class MyVetUpdate(LoginRequiredMixin, UpdateView):
     model = MyVet
-    fields = '__all__'
+    fields = ['name', 'clinic_name', 'phone_number', 'email']
+
+def myvet_detail(request, pk):
+    myvet = MyVet.objects.get(id=pk)
+    return render(request, 'myvet/detail.html', {
+        'myvet': myvet,
+    })
     
 def secretkey(request):
     secrect_key = os.environ['SECRET_KEY']
 
 def add_photo(request, dog_id):
-    # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
         s3 = boto3.client('s3')
-
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-
         try:
             bucket = os.environ['S3_BUCKET']
             s3.upload_fileobj(photo_file, bucket, key)
-
             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-
             Photo.objects.create(url=url, dog_id=dog_id)
         except Exception as e:
             print('An error occurred uploading file to S3')
@@ -195,5 +188,7 @@ def dogcalculator_create(request, dog_id):
         new_dogcalculator = form.save(commit=False)
         new_dogcalculator.dog_id = dog_id
         new_dogcalculator.save()
-    return redirect('detail', dog_id=dog_id)
+    return redirect('detail', {
+        'dog_id': dog_id,
+    })
 

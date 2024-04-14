@@ -2,16 +2,24 @@
 {% block content %}
 {% load static %}
 
-<h1>{{ dog.name }}'s Portal</h1>
 
-<div class="side-nav">
-    <button class="hamburger" onclick="toggleNav()">☰</button>
-    <div id="navLinks" class="nav-links">
-        <a href="javascript:void(0)" onclick="showSection('photos')">Photos</a>
-        <a href="javascript:void(0)" onclick="showSection('food-options')">Dog Food Options</a>
-        <a href="javascript:void(0)" onclick="showSection('food-calculator')">Dog Food Calculator</a>
-    </div>
-</div>
+<ul id="slide-out" class="sidenav" width="400px">
+    <li><div>
+        <img src="{% static 'images/DogTools.png' %}" width="200px">
+    </div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader"><i class="material-icons">settings_applications</i>Settings</a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="{% url 'dogs_update' dog.id %}">Edit</a></li>
+    <li><a href="{% url 'dogs_delete' dog.id %}">Delete</a></li>
+  </ul>
+  <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="large material-icons">menu</i></a>
 
 <div class="dog-card">
     <span class="permanent-marker-regular">{{ dog.name }}</span>
@@ -31,20 +39,17 @@
             <p><strong>Weight:</strong> {{ dog.weight }}</p>
             <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
             {% if dog.dogcalculator_set.all %}
-            {% for calculator in dog.dogcalculator_set.all %}
             <p><strong>Ideal Meal Per Day:</strong></p>
+            {% for calculate in dog.dogcalculator_set.all %}
             <ul class="calculator-weights">
-                <li>{{ calculator.weight }}</li>
+                <li>Ideal weight: <span id="weight">{{ calculate.weight }}</span></li>
+                <li>Activity level: <span id="activity">{{ calculate.activity }}</span></li>
+                <li>Servings Per Cup: <span id="servingspercup">{{ calculate.servingspercup }}</span></li>
+                <li>Food Per Day: </li>
             </ul>
             {% endfor %}
-            {% else %}
-            <p></p>
             {% endif %}
         </div>
-    </div>
-    <div class="card-actions">
-        <a href="{% url 'dogs_delete' dog.id %}" class="btn-delete"><i class="bi bi-trash"></i> Delete</a>
-        <a href="{% url 'dogs_update' dog.id %}" class="btn-edit"><i class="bi bi-pencil"></i> Edit</a>
     </div>
     <div></div>
     <h3>Dog Food</h3>
@@ -68,129 +73,124 @@
     </div>
 </div>
 
-    <div class="content-container">
-        <div id="photos" class="section" style="display: none;">
-            <div class="form-box">
-                <div class="card">
-                    <h3>Photos</h3>
-                    <div class="card-content">
-                        {% for photo in dog.photo_set.all %}
-                        <img class="responsive-img card-panel" src="{{photo.url}}" alt="Dog Photo">
-                        {% empty %}
-                        <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-                        {% endfor %}
-                    </div>
-                    <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST"
-                        class="card-panel">
-                        {% csrf_token %}
-                        <input type="file" name="photo-file">
-                        <br><br>
-                        <button type="submit" class="btn">Upload Photo</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="content-container">
-        <div id="food-options" class="section" style="display: none;">
-            <div class="form-box">
-                <div class="card">
-                    <h3>Dog Food Options</h3>
-                    <div>
-                        {% if dogfood.count %}
-                        {% for food in dogfood %}
-                        <div>
-                            <p><strong>{{ food.name }}</strong></p>
-                            <p><strong>{{ food.kcalperserving }}</strong> kcal/kg</p>
-                            <p><strong>{{ food.gramperserving }}</strong> kcal/cup</p>
-                            <p><strong>{{ food.current_food }}</strong></p>
-                            <p><strong>{{ food.new_food }}</strong></p>
-                            <form action="{% url 'assoc_dogfood' dog.id food.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn">Add</button>
-                            </form>
-                        </div>
-                        {% endfor %}
-                        {% else %}
-                        <p>No available dogfood found</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="content-container">
-        <div id="food-calculator" class="section" style="display: none;">
+<div class="content-container">
+    <div id="photos" class="section" style="display: none;">
+        <div class="form-box">
             <div class="card">
-                <h3>Dog Food Calculator</h3>
+                <h3>Photos</h3>
                 <div class="card-content">
-                    <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
-                        {% csrf_token %}
-                        {{ dogcalculator_form.as_p }}
-                        <input type="submit" value="Calculate" class="btn">
-                    </form>
+                    {% for photo in dog.photo_set.all %}
+                    <img class="responsive-img card-panel" src="{{photo.url}}" alt="Dog Photo">
+                    {% empty %}
+                    <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+                    {% endfor %}
+                </div>
+                <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST"
+                    class="card-panel">
+                    {% csrf_token %}
+                    <input type="file" name="photo-file">
+                    <br><br>
+                    <button type="submit" class="btn">Upload Photo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-container">
+    <div id="food-options" class="section" style="display: none;">
+        <div class="form-box">
+            <div class="card">
+                <h3>Dog Food Options</h3>
+                <div>
+                    {% if dogfood.count %}
+                    {% for food in dogfood %}
+                    <div>
+                        <p><strong>{{ food.name }}</strong></p>
+                        <p><strong>{{ food.kcalperserving }}</strong> kcal/kg</p>
+                        <p><strong>{{ food.gramperserving }}</strong> kcal/cup</p>
+                        <p><strong>{{ food.current_food }}</strong></p>
+                        <p><strong>{{ food.new_food }}</strong></p>
+                        <form action="{% url 'assoc_dogfood' dog.id food.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">Add</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p>No available dogfood found</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        function toggleNav() {
-            var navLinks = document.getElementById("navLinks");
-            navLinks.classList.toggle("show");
-        }
+<div class="content-container">
+    <div id="food-calculator" class="section" style="display: none;">
+        <div class="card">
+            <h3>Dog Food Calculator</h3>
+            <div class="card-content">
+                <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
+                    {% csrf_token %}
+                    {{ dogcalculator_form.as_p }}
+                    <input type="submit" value="Calculate" class="btn">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-        function showSection(sectionId) {
-            var sectionToShow = document.getElementById(sectionId);
-            var isDisplayed = window.getComputedStyle(sectionToShow).display !== 'none';
+<style>
+    .dog-card-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 
-            sectionToShow.style.display = isDisplayed ? 'none' : 'block';
-        }
-    </script>
+    .card {
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+    }
 
-    <style>
-        .dog-card-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+    .center-cropped {
+        width: 100%;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+    }
 
-        .card {
-            width: 300px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
-        }
+    .center-cropped img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: 4px solid #f97f2a;
+    }
 
-        .center-cropped {
-            width: 100%;
-            height: 400px;
-            position: relative;
-            overflow: hidden;
-        }
+    .permanent-marker-regular {
+        font-family: 'Permanent Marker', cursive, sans-serif;
+    }
 
-        .center-cropped img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border: 4px solid #f97f2a;
-        }
+    .profile-details {
+        margin-top: 10px;
+    }
 
-        .permanent-marker-regular {
-            font-family: 'Permanent Marker', cursive, sans-serif;
-        }
+    .content-container {
+        margin-top: 20px;
+    }
+</style>
 
-        .profile-details {
-            margin-top: 10px;
-        }
-
-        .content-container {
-            margin-top: 20px;
-        }
-    </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(function() {
+        $('.sidenav').sidenav();
+    });
+</script>
 
 
-    {% endblock %}
+
+{% endblock %}

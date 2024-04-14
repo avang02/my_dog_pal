@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Dog List</h1>
+<h1>Food Transition List</h1>
 
 <div class="card-container">
-    {% for dog in dogs %}
-        <a href="{% url 'detail' foodtrans.id %}" class="card-link">
+    {% for foodtran in foodtrans %}
+        <a href="{% url 'foodtrans_detail' foodtran.id %}" class="card-link">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">{{ foodtrans.name }}</span>
-                    <p>Name: {{ foodtrans.name }}</p>
-                    <p>Current Food: {{ foodtrans.current_food}}</p>
-                    <p>Meals per day: {{ foodtrans.meals_a_day}}</p>
-                    <p>Start Date: {{ foodtrans.start_date }}</p>
+                    <span class="card-title">{{ foodtran.name }}</span>
+                    <p>Name: {{ foodtran.name }}</p>
+                    <p>Current Food: {{ foodtran.current_food}}</p>
+                    <p>Meals per day: {{ foodtran.meals_a_day}}</p>
+                    <p>Start Date: {{ foodtran.start_date }}</p>
                 </div>
             </div>
         </a>
