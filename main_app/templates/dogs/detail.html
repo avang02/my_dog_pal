@@ -2,16 +2,24 @@
 {% block content %}
 {% load static %}
 
-<h1>{{ dog.name }}'s Portal</h1>
 
-<div class="side-nav">
-    <button class="hamburger" onclick="toggleNav()">☰</button>
-    <div id="navLinks" class="nav-links">
-        <a href="javascript:void(0)" onclick="showSection('photos')">Photos</a>
-        <a href="javascript:void(0)" onclick="showSection('food-options')">Dog Food Options</a>
-        <a href="javascript:void(0)" onclick="showSection('food-calculator')">Dog Food Calculator</a>
-    </div>
-</div>
+<ul id="slide-out" class="sidenav" width="400px">
+    <li><div>
+        <img src="{% static 'images/DogTools.png' %}" width="200px">
+    </div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader"><i class="material-icons">settings_applications</i>Settings</a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="{% url 'dogs_update' dog.id %}">Edit</a></li>
+    <li><a href="{% url 'dogs_delete' dog.id %}">Delete</a></li>
+  </ul>
+  <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="large material-icons">menu</i></a>
 
 <div class="dog-card">
     <span class="permanent-marker-regular">{{ dog.name }}</span>
@@ -41,10 +49,6 @@
             {% endfor %}
             {% endif %}
         </div>
-    </div>
-    <div class="card-actions">
-        <a href="{% url 'dogs_delete' dog.id %}" class="btn-delete"><i class="bi bi-trash"></i> Delete</a>
-        <a href="{% url 'dogs_update' dog.id %}" class="btn-edit"><i class="bi bi-pencil"></i> Edit</a>
     </div>
     <div></div>
     <h3>Dog Food</h3>
@@ -136,20 +140,6 @@
     </div>
 </div>
 
-<script>
-    function toggleNav() {
-        var navLinks = document.getElementById("navLinks");
-        navLinks.classList.toggle("show");
-    }
-
-    function showSection(sectionId) {
-        var sectionToShow = document.getElementById(sectionId);
-        var isDisplayed = window.getComputedStyle(sectionToShow).display !== 'none';
-
-        sectionToShow.style.display = isDisplayed ? 'none' : 'block';
-    }
-</script>
-
 <style>
     .dog-card-container {
         display: flex;
@@ -191,6 +181,15 @@
         margin-top: 20px;
     }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(function() {
+        $('.sidenav').sidenav();
+    });
+</script>
+
 
 
 {% endblock %}
