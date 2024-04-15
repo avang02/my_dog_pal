@@ -140,7 +140,7 @@ def myvet_index(request):
 
 class MyVetCreate(LoginRequiredMixin, CreateView):
     model = MyVet
-    fields = ['name', 'clinic_name', 'phone_number', 'email']
+    fields = ['name', 'clinic_name','preferred_doctor', 'phone_number', 'email']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
