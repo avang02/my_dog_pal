@@ -10,26 +10,24 @@
         <div class="col 12"></div>
 </div>
 
-
     <div class="row">
-        <div class="col s12">
-            <br>
-            <br>
+        <div class="section">
+            <div class="col s12">
+                <h1 class="flow-text white-text" style="text-shadow: 2px 2px black; font-size: 4rem">Welcome to MyDogPal!</h1>
+            </div>
+            <div class="col s12 m4">
+                <div class="card">
+                <p class="flow-text dog-description">Your dog's best friend in every wag! Track meals, count zoomies, and shower your pup with love. Join today for a tail-wagging adventure!</p>
+                <a href="{% url 'signup' %}" class="btn-large waves-effect waves-light blue">Sign Up Now</a>
+            </div>
+            </div>
+            <div class="col s12 m4"></div>
+            <div class="col s12 m4"></div>
         </div>
-        <div class="col s12 m6">
-            <h1 class="flow-text white-text">Welcome to MyDogPal!</h1>
-            <p class="white-text">Your dog's best friend in every wag! Track meals, count zoomies, and shower your
-                pup with love. Join today for a tail-wagging adventure!</p>
-        </div>
+        
+        
         <div class="col s12 m6"></div>
         <div class="col s12 m6">
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            
-            <a href="{% url 'signup' %}" class="btn-large waves-effect waves-light blue">Sign Up Now</a>
         </div>
     </div>
   </div>
@@ -66,8 +64,7 @@
                         Enhance your dog's nutrition with our app's comprehensive food details, like kcal and grams per serving. Whether tweaking their diet or meeting their needs, our app gives you precise feeding control. Because for your pup's health, every bite matters.
                     </p>
                 </div>
-                <div class="card-action">
-                </div>
+                <div class="card-action"></div>
             </div>
         </div>
         <div class="col s12 m4">
@@ -79,8 +76,7 @@
                     <span class="card-title">Food Transition</span>
                     <p>"Transition your dog to a new diet effortlessly with our app's food transition algorithm. Say goodbye to guesswork and hello to clarity as you track every step. Monitor serving sizes and meal frequency with precision. Let our app guide you through this important nutritional journey for your furry friend."</p>
                 </div>
-                <div class="card-action">
-                </div>
+                <div class="card-action"></div>
             </div>
         </div>
     </div>
@@ -95,6 +91,15 @@
         background-position: top center;
         margin: 0;
     }
+
+    .dog-description {
+    font-size: 2rem;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
 
     .middle-section {
         text-align: left;
