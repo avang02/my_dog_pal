@@ -152,7 +152,7 @@ class MyVetDelete(LoginRequiredMixin, DeleteView):
 
 class MyVetUpdate(LoginRequiredMixin, UpdateView):
     model = MyVet
-    fields = ['name', 'clinic_name', 'phone_number', 'email']
+    fields = ['name', 'clinic_name','preferred_doctor', 'phone_number', 'email']
 
 def myvet_detail(request, pk):
     myvet = MyVet.objects.get(id=pk)

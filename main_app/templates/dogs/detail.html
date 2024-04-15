@@ -3,30 +3,67 @@
 {% load static %}
 
 <main>
-<ul id="slide-out" class="sidenav" width="300px">
-    <li>
-        <div>
-            <img src="{% static 'images/DogTools.png' %}" width="200px">
-        </div>
-    </li>
-    <li><a href="#food-options-modal" class="modal-trigger"><i class="material-icons left">lunch_dining</i>Dog Food</a></li>
-    <li><a href="#food-calculator-modal" class="modal-trigger"><i class="material-icons left">calculate</i>Calculator</a></li>
-    <li><a href="#"><i class="material-icons left">sync_alt</i>Transition</a></li>
-    <li><a href="#photos-modal" class="modal-trigger"><i class="material-icons">collections</i>Gallery</a></li>
-    <li><a href="#add-photos"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
-    <li>
-        <div class="divider"></div>
-    </li>
-    <li><a href="{% url 'dogs_update' dog.id %}"><i class="material-icons">edit</i>Edit</a></li>
-    <li><a href="{% url 'dogs_delete' dog.id %}"><i class="material-icons">delete_forever</i>Delete</a></li>
-</ul>
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="medium material-icons">menu</i></a>
+    <ul id="slide-out" class="sidenav" width="300px">
+        <li>
+            <div>
+                <img src="{% static 'images/DogTools.png' %}" width="200px">
+            </div>
+        </li>
+        <li><a href="#food-options-modal" class="modal-trigger"><i class="material-icons left">fastfood</i>Dog Food</a></li>
+        <li><a href="#food-calculator-modal" class="modal-trigger"><i class="material-icons left">calculate</i>Calculator</a></li>
+        <li><a href="#"><i class="material-icons left">sync_alt</i>Transition</a></li>
+        <li><a href="#photos-modal" class="modal-trigger"><i class="material-icons left">collections</i>Gallery</a></li>
+        <li><a href="#add-photos"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a href="{% url 'dogs_update' dog.id %}"><i class="material-icons left">edit</i>Edit</a></li>
+        <li><a href="{% url 'dogs_delete' dog.id %}"><i class="material-icons left">delete_forever</i>Delete</a></li>
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="medium material-icons">menu</i></a>
 
     <div class="container">
         <div class="masonry row" style="position: relative; height: 2140.9;">
-            <div class="col 13 m6 s12">
+            <div class="col s12">
                 <div class="dog-card">
                     <div class="card-content">
+                        <div class="row">
+                            <div class="col s12 m6">
+                                <div class="center-cropped">
+                                    {% if dog.img_url %}
+                                        <img src="{{ dog.img_url }}" alt="{{ dog.name }}">
+                                    {% else %}
+                                        <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo" class="profile-image">
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <span class="permanent-marker-regular card-title">{{ dog.name }}</span>
+                                <p><strong>Breed:</strong> {{ dog.breed }}</p>
+                                <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
+                                <p><strong>Weight:</strong> {{ dog.weight }}</p>
+                                <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
+                                <p><strong>Ideal Meal Per Day:</strong></p>
+                                <div class="calculator-container"></div>
+                                <div>
+                                    {% if dog.dogfood.count %}
+                                        {% for food in dog.dogfood.all %}
+                                            <p><strong>Current Food: </strong>{{ food.name }}</p>
+                                            <p><strong>Caloric Content: </strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
+                                        {% endfor %}
+                                    {% else %}
+                                        <h5>No Dogfood</h5>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
                         <span class="permanent-marker-regular card-title">{{ dog.name }}</span>
                         <div class="card-content" id="dogdetails-content">
                             <div class="center-cropped">
@@ -65,6 +102,7 @@
                 <div class="modal-content">
                     <h3>Dog Food Options</h3>
                     <div>
+                        
                         <table class="highlight">
                             <thead>
                                 <tr>
@@ -78,6 +116,14 @@
                             </thead>
                             <tbody>
                                 {% if dogfood.count %}
+                                {% for food in dog.dogfood.all %}
+                                <p><strong>Current Food: </strong>{{ food.name }}</p>
+                                        <p><strong>Caloric Content: </strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
+                                        <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn">Remove</button>
+                                        </form>
+                                {% endfor %}
                                 {% for food in dogfood %}
                                 <tr>
                                     <td>{{ food.name }}</td>
@@ -114,7 +160,7 @@
                             <label for="ideal-weight">Ideal Weight: </label>
                             <input type="number" name="ideal-weight" id="ideal-weight">
                             <label for="activity-level">Activitiy Level: </label>
-                            <select name="activity" class="input-field" id="activity">
+                            <select name="activity" class="input-field" id="activity" display="visible">
                                 <option value="60.82">Typical</option>
                                 <option value="69.18">Active</option>
                                 <option value="38.77">Overweight</option>
@@ -174,11 +220,14 @@
 
 <style>
     .center-cropped {
-        width: 50%;
-        height: 50%;
-        position: relative;
-        overflow: hidden;
-    }
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    float: left;
+    margin-right: 20px; /* Adjust as needed */
+}
+
 
     .center-cropped img {
         width: 100%;
@@ -218,7 +267,7 @@
   });
 
     document.getElementById('calculate').addEventListener('onclick', function() {
-        const dogContents = document.getElementById('dogdetails-content');
+        const dogContents = document.getElementById('calculator-container');
         const idealWeight = document.getElementById('ideal-weight').value;
         const activity = document.getElementById('activity').value;
         const servingspercup = document.getElementById('servingspercup').value;
