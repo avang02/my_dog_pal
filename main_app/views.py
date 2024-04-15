@@ -3,7 +3,6 @@ from django.http import request, HttpResponse
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
 from .models import Dog, DogFood, FoodTrans, MyVet, Photo
-from .forms import DogcalculatorForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -42,11 +41,9 @@ def dogs_detail(request, dog_id):
     dog = Dog.objects.get(id=dog_id)
     id_list = dog.dogfood.all().values_list('id')
     dogfood_dog_doesnt_have = DogFood.objects.exclude(id__in=id_list)
-    dogcalculator_form = DogcalculatorForm()
     return render(request, 'dogs/detail.html', {
         'dog': dog,
         'dogfood': dogfood_dog_doesnt_have,
-        'dogcalculator_form': dogcalculator_form,
     })
 
 class DogCreate(LoginRequiredMixin, CreateView):
@@ -180,17 +177,7 @@ def add_photo(request, dog_id):
             print('An error occurred uploading file to S3')
             print(e)
     return redirect('detail', dog_id=dog_id)
-  
-@login_required
-def dogcalculator_create(request, dog_id):
-    form = DogcalculatorForm(request.POST)
-    if form.is_valid():
-        new_dogcalculator = form.save(commit=False)
-        new_dogcalculator.dog_id = dog_id
-        new_dogcalculator.save()
-    return redirect('detail', {
-        'dog_id': dog_id,
-    })
+
 
 
 
