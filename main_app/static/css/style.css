@@ -364,3 +364,21 @@ h1.flow-text.white-text{
 footer.page-footer {
     background-color: #f97f2a;
 }
+
+#foodtransition-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: larger;
+    font: bold;
+}
+
+#foodtransition-card > h2 {
+    font-size: 30px;
+}
+
+.foodtransition-imgs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
