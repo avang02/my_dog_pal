@@ -2,18 +2,6 @@ from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 
-ACTIVITY = (
-    (60.82, 'typical'), 
-    (69.18, 'active',), 
-    (38.77, 'overweight'), 
-    (96.92, 'high_activity'), 
-    (49.79, 'senior'), 
-    (49.79, 'inactive'), 
-    (77.36, 'light_duty'), 
-    (89.99, 'med_duty'), 
-    (117.63, 'high_duty')
-    )
-
 # Create your models here.
 
 class DogFood(models.Model):
@@ -83,21 +71,6 @@ class Photo(models.Model):
 
     def __str__(self):
         return f"Photo for dog_id: {self.dog_id} @{self.url}"
-
-class DogCalculator(models.Model):
-
-    ideal_weight = models.IntegerField('ideal weight')
-    activity = models.FloatField(choices=ACTIVITY, default=ACTIVITY[0][0])
-    servingspercup = models.IntegerField()
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"Activity level: {self.get_activity_display()}. Weight: {self.ideal_weight}. Servings: {self.servingspercup}"
-    
-    def calories_per_day(self):
-        return pow(self.ideal_weight, 0.75) * self.activity
-    
 
 
 
