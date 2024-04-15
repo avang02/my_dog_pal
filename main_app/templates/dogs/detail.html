@@ -43,17 +43,6 @@
                                 <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
                                 <p><strong>Weight:</strong> {{ dog.weight }}</p>
                                 <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
-                                {% if dog.dogcalculator_set.all %}
-                                    <p><strong>Ideal Meal Per Day:</strong></p>
-                                    {% for calculate in dog.dogcalculator_set.all %}
-                                        <ul class="calculator-weights">
-                                            <li>Ideal weight: <span id="weight">{{ calculate.weight }}</span></li>
-                                            <li>Activity level: <span id="activity">{{ calculate.activity }}</span></li>
-                                            <li>Servings Per Cup: <span id="servingspercup">{{ calculate.servingspercup }}</span></li>
-                                            <li>Food Per Day: </li>
-                                        </ul>
-                                    {% endfor %}
-                                {% endif %}
                                 <div>
                                     {% if dog.dogfood.count %}
                                         {% for food in dog.dogfood.all %}
@@ -132,10 +121,24 @@
                     <div class="modal-content">
                         <h3>Dog Food Calculator</h3>
                         <div class="card-content">
-                            <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
-                                {% csrf_token %}
-                                {{ dogcalculator_form.as_p }}
-                                <input type="submit" value="Calculate" class="btn">
+                            <form action="">
+                                <label for="ideal-weight">Ideal Weight: </label>
+                                <input type="number" name="ideal-weight" id="ideal-weight">
+                                <label for="activity-level">Activitiy Level: </label>
+                                <select name="activity" class="input-field" id="activity" display="visible">
+                                    <option value="60.82">Typical</option>
+                                    <option value="69.18">Active</option>
+                                    <option value="38.77">Overweight</option>
+                                    <option value="96.92">High Activity</option>
+                                    <option value="49.79">Senior</option>
+                                    <option value="49.79">Inactive</option>
+                                    <option value="77.36">Light Duty</option>
+                                    <option value="89.99">Medium Duty</option>
+                                    <option value="117.63">High Duty</option>
+                                </select>
+                                <label for="servingspercup">Servings Per Cup: </label>
+                                <input type="number" min="1" max="5" id="servingspercup">
+                                <button type="submit" value="Calculate" id="calculate"></button>
                             </form>
                         </div>
                     </div>
@@ -166,9 +169,6 @@
                         </div>
                     </div>
                 </div>
-                
-                
-                
 
                 <div id="add-photos" class="section" style="display: none;">
                     <div class="card">
