@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!-- <h1> Add Food Transition</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit" class="btn">
+</form>  -->
+
+
+
+
 <div class="row">
     <div class="col s12 m8 offset-m2">
         <div class="card">
@@ -17,13 +29,21 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <label for="{{ form.current_food.id_for_label }}">{{ form.current_food.label }}</label><br>
+                            
+                            {{ form.current_food.label_tag }} <br>
                             {{ form.current_food }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <i class="material-icons prefix">alarm</i>
+                            <i class="material-icons prefix">person</i>
+                            {{ form.new_food.label_tag }}
+                            {{ form.new_food }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">person</i>
                             {{ form.meals_a_day.label_tag }}
                             {{ form.meals_a_day }}
                         </div>
@@ -35,9 +55,16 @@
                             {{ form.start_date }}
                         </div>
                     </div>
+                    <div class="row"> 
+                        <div class="input-field col s12">
+                            
+                            {{ form.dog.label_tag }} <br>
+                            {{ form.dog }}
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add Food Transition</button>
+                            <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add Dog Food</button>
                         </div>
                     </div>
                 </form>
