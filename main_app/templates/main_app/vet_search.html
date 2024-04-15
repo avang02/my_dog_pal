@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vet Search</title>
+</head>
+<body>
+
+<h1>Vet Search</h1>
+
+<form action="{% url 'vet_search' %}" method="get">
+    <label for="input">Search for Vets:</label>
+    <input type="text" id="input" name="input" value="vet">
+    <button type="submit">Find Vet</button>
+</form>
+
+<div id="results">
+    {% if vet_results %}
+        <h2>Results:</h2>
+        <ul>
+            {% for vet in vet_results %}
+                <li>{{ vet.name }} - {{ vet.formatted_address }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

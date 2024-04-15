@@ -54,4 +54,42 @@
     </div>
 </div>
 
+
+<h1>Vet Search</h1>
+<form action="https://maps.googleapis.com/maps/api/place/findplacefromtext/json" method="get">
+    <input type="text" name="input" value="vet" style="display: none;">
+    <input type="text" name="inputtype" value="textquery" style="display: none;">
+    <input type="text" name="fields" value="formatted_address,name,business_status,place_id" style="display: none;">
+    <input type="text" name="key" value="AIzaSyAUwpcXbJv7Jyb4_HJL7nYFVBQ7Xjv3CuA" style="display: none;">
+    <button type="submit">Find Vet</button>
+</form>
+
+<h1>Vet Search2</h1>
+
+<form action="{% url 'vet_search' %}" method="get">
+    <label for="input">Search for Vets:</label>
+    <input type="text" id="input" name="input" value="vet">
+    <button type="submit">Find Vet</button>
+</form>
+
+<div id="results">
+    {% if vet_results %}
+        <h2>Results:</h2>
+        <ul>
+            {% for vet in vet_results %}
+                <li>{{ vet.name }} - {{ vet.formatted_address }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
+
+
+
 {% endblock %}
+
