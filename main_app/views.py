@@ -7,6 +7,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
+from math import pow
 import uuid
 import boto3
 import os
@@ -62,10 +63,23 @@ def dogs_detail(request, dog_id):
     dog = Dog.objects.get(id=dog_id)
     id_list = dog.dogfood.all().values_list('id')
     dogfood_dog_doesnt_have = DogFood.objects.exclude(id__in=id_list)
+    ideal_weight = request.POST.get('ideal-weight')
+    activity = request.POST.get('activity')
+    servingspercup = request.POST.get('servingspercup')
+    kcal_per_day = None
+    if ideal_weight != None and activity != None: 
+        kcal_per_day = round(pow(float(ideal_weight), 0.75) * float(activity))
+    
     return render(request, 'dogs/detail.html', {
         'dog': dog,
         'dogfood': dogfood_dog_doesnt_have,
+        'ideal_weight': ideal_weight,
+        'activity': activity,
+        'servingspercup': servingspercup,
+        'kcal_per_day': kcal_per_day,
     })
+
+
 
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
@@ -198,6 +212,7 @@ def add_photo(request, dog_id):
             print('An error occurred uploading file to S3')
             print(e)
     return redirect('detail', dog_id=dog_id)
+
 
 
 

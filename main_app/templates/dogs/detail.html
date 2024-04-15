@@ -13,7 +13,7 @@
         <li><a href="#food-calculator-modal" class="modal-trigger"><i class="material-icons left">calculate</i>Calculator</a></li>
         <li><a href="#"><i class="material-icons left">sync_alt</i>Transition</a></li>
         <li><a href="#photos-modal" class="modal-trigger"><i class="material-icons left">collections</i>Gallery</a></li>
-        <li><a href="#add-photos"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
+        <li><a href="#add-photos-modal"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
         <li>
             <div class="divider"></div>
         </li>
@@ -43,7 +43,14 @@
                                 <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
                                 <p><strong>Weight:</strong> {{ dog.weight }}</p>
                                 <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
+                                {% if ideal_weight != None or activity != None or servingspercup != None %}
+                                <div class="calculator-container"></div>
+                                    <p><strong>Ideal Weight: </strong>{{ ideal_weight }}</p>
+                                    <p><strong>Activity Level: </strong>{{ activity }} kcal/lbs</p>
+                                    <p><strong>Servings Per Cup: </strong>{{ servingspercup }} Servings</p>
+                                    <p><strong>Amount of Calories Needed Per Day: </strong>{{ kcal_per_day }} Calories</p>
                                 <div>
+                                {% endif %}
                                     {% if dog.dogfood.count %}
                                         {% for food in dog.dogfood.all %}
                                             <p><strong>Current Food: </strong>{{ food.name }}</p>
@@ -61,127 +68,126 @@
         </div>
     </div>
 
-
-            <div id="food-options-modal" class="modal">
-                <div class="modal-content">
-                    <h3>Dog Food Options</h3>
-                    <div>
-                        
-                        <table class="highlight">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>kcal per serving (kg)</th>
-                                    <th>kcal per serving (cup)</th>
-                                    <th>Current Food</th>
-                                    <th>New Food</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if dogfood.count %}
-                                {% for food in dog.dogfood.all %}
-                                <p><strong>Current Food: </strong>{{ food.name }}</p>
-                                        <p><strong>Caloric Content: </strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
-                                        <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn">Remove</button>
-                                        </form>
-                                {% endfor %}
-                                {% for food in dogfood %}
-                                <tr>
-                                    <td>{{ food.name }}</td>
-                                    <td>{{ food.kcalperserving }}</td>
-                                    <td>{{ food.gramperserving }}</td>
-                                    <td>{{ food.current_food }}</td>
-                                    <td>{{ food.new_food }}</td>
-                                    <td>
-                                        <form action="{% url 'assoc_dogfood' dog.id food.id %}" method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit" class="orange">Add</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                {% else %}
-                                <tr>
-                                    <td colspan="6">No available dog food found</td>
-                                </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
-                </div>
+    <div id="food-options-modal" class="modal">
+        <div class="modal-content">
+            <h3>Dog Food Options</h3>
+            <div>
+                
+                <table class="highlight">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>kcal per serving (kg)</th>
+                            <th>kcal per serving (cup)</th>
+                            <th>Current Food</th>
+                            <th>New Food</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if dogfood.count %}
+                        {% for food in dog.dogfood.all %}
+                        <p><strong>Current Food: </strong>{{ food.name }}</p>
+                                <p><strong>Caloric Content: </strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
+                                <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn">Remove</button>
+                                </form>
+                        {% endfor %}
+                        {% for food in dogfood %}
+                        <tr>
+                            <td>{{ food.name }}</td>
+                            <td>{{ food.kcalperserving }}</td>
+                            <td>{{ food.gramperserving }}</td>
+                            <td>{{ food.current_food }}</td>
+                            <td>{{ food.new_food }}</td>
+                            <td>
+                                <form action="{% url 'assoc_dogfood' dog.id food.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="orange">Add</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No available dog food found</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
             </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
+        </div>
+    </div>
             
-                <div id="food-calculator-modal" class="modal">
-                    <div class="modal-content">
-                        <h3>Dog Food Calculator</h3>
-                        <div class="card-content">
-                            <form action="">
-                                <label for="ideal-weight">Ideal Weight: </label>
-                                <input type="number" name="ideal-weight" id="ideal-weight">
-                                <label for="activity-level">Activitiy Level: </label>
-                                <select name="activity" class="input-field" id="activity" display="visible">
-                                    <option value="60.82">Typical</option>
-                                    <option value="69.18">Active</option>
-                                    <option value="38.77">Overweight</option>
-                                    <option value="96.92">High Activity</option>
-                                    <option value="49.79">Senior</option>
-                                    <option value="49.79">Inactive</option>
-                                    <option value="77.36">Light Duty</option>
-                                    <option value="89.99">Medium Duty</option>
-                                    <option value="117.63">High Duty</option>
-                                </select>
-                                <label for="servingspercup">Servings Per Cup: </label>
-                                <input type="number" min="1" max="5" id="servingspercup">
-                                <button type="submit" value="Calculate" id="calculate"></button>
-                            </form>
+    <div id="food-calculator-modal" class="modal">
+        <div class="modal-content">
+            <h3>Dog Food Calculator</h3>
+            <div class="card-content">
+                <form action="{% url 'detail' dog.id %}" method="POST">
+                    {% csrf_token %}
+                    <label for="ideal-weight">Ideal Weight: </label>
+                    <input type="number" id="ideal-weight" name="ideal-weight">
+                    <label for="activity-level">Activitiy Level: </label>
+                    <div class="input-field col s12">
+                        <select id="activity" name="activity">
+                            <option value="60.82">Typical</option>
+                            <option value="69.18">Active</option>
+                            <option value="38.77">Overweight</option>
+                            <option value="96.92">High Activity</option>
+                            <option value="49.79">Senior</option>
+                            <option value="49.79">Inactive</option>
+                            <option value="77.36">Light Duty</option>
+                            <option value="89.99">Medium Duty</option>
+                            <option value="117.63">High Duty</option>
+                        </select>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
-                    </div>
-                </div>
-
-                <div id="photos-modal" class="modal">
-                    <div class="modal-content">
-                        <h3>{{ dog.name }}'s Photo Gallery</h3>
-                        <div class="card-content">
-                            {% for photo in dog.photo_set.all %}
-                            <div class="card">
-                                <div class="card-image">
-                                    <img src="{{photo.url}}" alt="Dog Photo" width="100px"> 
-                                    <span class="card-title">{{ photo.title }}</span>
-                                </div>
-                            </div>
-                            {% empty %}
-                            <div class="col s12">
-                                <p>No photos uploaded</p>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="add-photos" class="section" style="display: none;">
-                    <div class="card">
-                        <h3>Add Photos</h3>
-                        <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-                            {% csrf_token %}
-                            <input type="file" name="photo-file">
-                            <br><br>
-                            <button type="submit" class="btn">Upload Photo</button>
-                        </form>
-                    </div>
-                </div>
+                    <label for="servingspercup">Servings Per Cup: </label>
+                    <input type="number" min="1" max="5" id="servingspercup" name="servingspercup">
+                    <button type="submit" id="calculate" onclick="Calculate(e)">Calculate</button>
+                </form>
             </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
+        </div>
+    </div>
+
+    <div id="photos-modal" class="modal">
+        <div class="modal-content">
+            <h3>{{ dog.name }}'s Photo Gallery</h3>
+            <div class="card-content">
+                {% for photo in dog.photo_set.all %}
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{photo.url}}" alt="Dog Photo" width="100px"> 
+                        <span class="card-title">{{ photo.title }}</span>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col s12">
+                    <p>No photos uploaded</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-photos-modal" class="section" style="display: none;">
+        <div class="card">
+            <h3>Add Photos</h3>
+            <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                {% csrf_token %}
+                <input type="file" name="photo-file">
+                <br><br>
+                <button type="submit" class="btn">Upload Photo</button>
+            </form>
         </div>
     </div>
 </main>
@@ -217,6 +223,13 @@
 </style>
 
 <script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const modals = document.querySelectorAll('.modal');
         M.Modal.init(modals, {
@@ -230,7 +243,29 @@
             draggable: false 
         });
     });
+
+    console.log("Before the eventlistener");
+    // document.getElementById('calculate').addEventListener.onsubmit = 
+    function Calculate(e) {
+        e.preventDefault();
+        console.log("This is working");
+        // const dogContents = document.getElementById('calculator-container');
+        const idealWeight = document.getElementById('ideal-weight').value;
+        const activity = document.getElementById('activity').value;
+        const servingspercup = document.getElementById('servingspercup').value;
+
+        const weightP = document.getElementById('ideal-weight p');
+        weightP.innerText = "Ideal Weight: " + idealWeight;
+
+        const activityP = document.getElementById('activity p');
+        activityP.innerText = "Activity Level: " + activity;
+
+        const servingspercupP = document.getElementById('servingspercup p');
+        servingspercupP.innerText = "Servings Per Cup: " + servingspercup;
+    }
 </script>
+
+
 
 
 {% endblock %}
