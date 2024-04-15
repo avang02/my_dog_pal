@@ -31,11 +31,14 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <i class="material-icons prefix">healing</i>
-                            {{ form.neutered_spayed.label_tag }}
-                            {{ form.neutered_spayed }}
+                            <p class="checkbox-field">
+                                <label>
+                                    {{ form.neutered_spayed }}
+                                    <span>Neutered/Spayed</span>
+                                </label>
+                            </p>
                         </div>
-                    </div>
+                    </div>                    
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">fitness_center</i>
@@ -74,5 +77,16 @@
         </div>
     </div>
 </div>
+
+<style>
+    .checkbox-field label {
+        display: flex;
+        align-items: center;
+    }
+    .checkbox-field label input[type="checkbox"] {
+        margin-right: 10px;
+    }
+</style>
+
 
 {% endblock %}
