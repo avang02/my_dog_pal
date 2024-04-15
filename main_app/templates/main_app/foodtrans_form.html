@@ -1,11 +1,48 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1> Add Food Transition</h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" class="btn">
-</form>
-
+<div class="row">
+    <div class="col s12 m8 offset-m2">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Add Dog Transition</span>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="{{ form.current_food.id_for_label }}">{{ form.current_food.label }}</label><br>
+                            {{ form.current_food }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">alarm</i>
+                            {{ form.meals_a_day.label_tag }}
+                            {{ form.meals_a_day }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">date_range</i>
+                            {{ form.start_date.label_tag }}
+                            {{ form.start_date }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add Food Transition</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

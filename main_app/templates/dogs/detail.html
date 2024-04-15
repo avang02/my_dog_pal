@@ -43,14 +43,18 @@
                                 <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
                                 <p><strong>Weight:</strong> {{ dog.weight }}</p>
                                 <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
-                                {% if ideal_weight != None or activity != None or servingspercup != None %}
-                                <div class="calculator-container"></div>
-                                    <p><strong>Ideal Weight: </strong>{{ ideal_weight }}</p>
-                                    <p><strong>Activity Level: </strong>{{ activity }} kcal/lbs</p>
-                                    <p><strong>Servings Per Cup: </strong>{{ servingspercup }} Servings</p>
-                                    <p><strong>Amount of Calories Needed Per Day: </strong>{{ kcal_per_day }} Calories</p>
-                                <div>
+                                {% if dog.dogcalculator_set.all %}
+                                    <p><strong>Ideal Meal Per Day:</strong></p>
+                                    {% for calculate in dog.dogcalculator_set.all %}
+                                        <ul class="calculator-weights">
+                                            <li>Ideal weight: <span id="weight">{{ calculate.weight }}</span></li>
+                                            <li>Activity level: <span id="activity">{{ calculate.activity }}</span></li>
+                                            <li>Servings Per Cup: <span id="servingspercup">{{ calculate.servingspercup }}</span></li>
+                                            <li>Food Per Day: </li>
+                                        </ul>
+                                    {% endfor %}
                                 {% endif %}
+                                <div>
                                     {% if dog.dogfood.count %}
                                         {% for food in dog.dogfood.all %}
                                             <p><strong>Current Food: </strong>{{ food.name }}</p>
@@ -128,27 +132,10 @@
                     <div class="modal-content">
                         <h3>Dog Food Calculator</h3>
                         <div class="card-content">
-                            <form action="{% url 'detail' dog.id %}" method="POST">
+                            <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
                                 {% csrf_token %}
-                                <label for="ideal-weight">Ideal Weight: </label>
-                                <input type="number" id="ideal-weight" name="ideal-weight">
-                                <label for="activity-level">Activitiy Level: </label>
-                                <div class="input-field col s12">
-                                    <select id="activity" name="activity">
-                                        <option value="60.82">Typical</option>
-                                        <option value="69.18">Active</option>
-                                        <option value="38.77">Overweight</option>
-                                        <option value="96.92">High Activity</option>
-                                        <option value="49.79">Senior</option>
-                                        <option value="49.79">Inactive</option>
-                                        <option value="77.36">Light Duty</option>
-                                        <option value="89.99">Medium Duty</option>
-                                        <option value="117.63">High Duty</option>
-                                    </select>
-                                  </div>
-                                <label for="servingspercup">Servings Per Cup: </label>
-                                <input type="number" min="1" max="5" id="servingspercup" name="servingspercup">
-                                <button type="submit" id="calculate" onclick="Calculate(e)">Calculate</button>
+                                {{ dogcalculator_form.as_p }}
+                                <input type="submit" value="Calculate" class="btn">
                             </form>
                         </div>
                     </div>
@@ -179,6 +166,9 @@
                         </div>
                     </div>
                 </div>
+                
+                
+                
 
                 <div id="add-photos" class="section" style="display: none;">
                     <div class="card">
@@ -227,13 +217,6 @@
 </style>
 
 <script>
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
-    });
-
     document.addEventListener('DOMContentLoaded', function () {
         const modals = document.querySelectorAll('.modal');
         M.Modal.init(modals, {
@@ -247,29 +230,7 @@
             draggable: false 
         });
     });
-
-    console.log("Before the eventlistener");
-    // document.getElementById('calculate').addEventListener.onsubmit = 
-    function Calculate(e) {
-        e.preventDefault();
-        console.log("This is working");
-        // const dogContents = document.getElementById('calculator-container');
-        const idealWeight = document.getElementById('ideal-weight').value;
-        const activity = document.getElementById('activity').value;
-        const servingspercup = document.getElementById('servingspercup').value;
-
-        const weightP = document.getElementById('ideal-weight p');
-        weightP.innerText = "Ideal Weight: " + idealWeight;
-
-        const activityP = document.getElementById('activity p');
-        activityP.innerText = "Activity Level: " + activity;
-
-        const servingspercupP = document.getElementById('servingspercup p');
-        servingspercupP.innerText = "Servings Per Cup: " + servingspercup;
-    }
 </script>
-
-
 
 
 {% endblock %}
