@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import vet_search
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -21,11 +22,14 @@ urlpatterns = [
     path('foodtrans/', views.foodtrans_index, name='foodtrans_index'),
     path('foodtrans/<int:pk>/update/', views.FoodTransUpdate.as_view(), name='foodtrans_update'),
     path('foodtrans/<int:pk>/delete/', views.FoodTransDelete.as_view(), name='foodtrans_delete'),
+    path('foodtrans/<int:dog_id>/assoc_foodtrans/<int:foodtrans_id>/', views.assoc_foodtrans, name='assoc_foodtrans'),
+    path('foodtrans/<int:dog_id>/unassoc_foodtrans/<int:foodtrans_id>/', views.unassoc_foodtrans, name='unassoc_foodtrans'),
     path('myvet/create/', views.MyVetCreate.as_view(), name='myvet_create'),
     path('myvet/', views.myvet_index, name='myvet_index'),
     path('myvet/<int:pk>/', views.myvet_detail, name='myvet_detail'),
     path('myvet/<int:pk>/update/', views.MyVetUpdate.as_view(), name='myvet_update'),
     path('myvet/<int:pk>/delete/', views.MyVetDelete.as_view(), name='myvet_delete'),
     path('dogs/<int:dog_id>/add_photo/', views.add_photo, name='add_photo'),
-    path('myvet/create/', views.vet_search, name='vet_search'),
+    # path('myvet/create/', views.vet_search, name='vet_search'),
+    path('vet_search/', vet_search, name='vet_search'),
 ]

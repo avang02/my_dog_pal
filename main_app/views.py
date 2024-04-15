@@ -19,7 +19,7 @@ def vet_search(request):
     if request.method == 'GET' and 'input' in request.GET:
         input_value = request.GET['input']
         input_type = 'textquery'
-        fields = 'formatted_address,name,business_status,place_id'
+        fields = ['formatted_address', 'name', 'business_status', 'place_id']
         api_key = 'AIzaSyAUwpcXbJv7Jyb4_HJL7nYFVBQ7Xjv3CuA'
 
         url = f'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={input_value}&inputtype={input_type}&fields={fields}&key={api_key}'
@@ -61,8 +61,11 @@ def dogs_index(request):
 @login_required
 def dogs_detail(request, dog_id):
     dog = Dog.objects.get(id=dog_id)
-    id_list = dog.dogfood.all().values_list('id')
-    dogfood_dog_doesnt_have = DogFood.objects.exclude(id__in=id_list)
+    dogfood_id_list = dog.dogfood.all().values_list('id')
+    dogfood_dog_doesnt_have = DogFood.objects.exclude(id__in=dogfood_id_list)
+    foodtrans_id_list = dog.foodtrans.all().values_list('id')
+    foodtrans_dog_doesnt_have = FoodTrans.objects.exclude(id__in=foodtrans_id_list)
+
     ideal_weight = request.POST.get('ideal-weight')
     activity = request.POST.get('activity')
     servingspercup = request.POST.get('servingspercup')
@@ -73,6 +76,7 @@ def dogs_detail(request, dog_id):
     return render(request, 'dogs/detail.html', {
         'dog': dog,
         'dogfood': dogfood_dog_doesnt_have,
+        'foodtrans': foodtrans_dog_doesnt_have,
         'ideal_weight': ideal_weight,
         'activity': activity,
         'servingspercup': servingspercup,
@@ -145,7 +149,7 @@ def foodtrans_index(request):
 
 class FoodTransCreate(LoginRequiredMixin, CreateView):
     model = FoodTrans
-    fields = ['name', 'current_food', 'new_food', 'meals_a_day', 'start_date', 'dog']
+    fields = ['name', 'current_food', 'new_food', 'meals_a_day', 'start_date']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -157,7 +161,7 @@ class FoodTransDelete(LoginRequiredMixin, DeleteView):
 
 class FoodTransUpdate(LoginRequiredMixin, UpdateView):
     model = FoodTrans
-    fields = ['name', 'current_food', 'new_food', 'meals_a_day', 'start_date', 'dog']
+    fields = ['name', 'current_food', 'new_food', 'meals_a_day', 'start_date']
 
 @login_required 
 def foodtrans_detail(request, pk):
@@ -165,6 +169,16 @@ def foodtrans_detail(request, pk):
     return render(request, 'foodtrans/detail.html', {
         'foodtrans': foodtrans,
     })
+
+@login_required
+def assoc_foodtrans(request, dog_id, foodtrans_id):
+    Dog.objects.get(id=dog_id).foodtrans.add(foodtrans_id)
+    return redirect('detail', dog_id=dog_id)
+
+@login_required
+def unassoc_foodtrans(request, dog_id, foodtrans_id):
+    Dog.objects.get(id=dog_id).foodtrans.remove(foodtrans_id)
+    return redirect('detail', dog_id=dog_id)
 
 @login_required
 def myvet_index(request):
