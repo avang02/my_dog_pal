@@ -360,3 +360,7 @@ a:hover {
 h1.flow-text.white-text{
     font-size: 4rem;
 }
+
+footer.page-footer {
+    background-color: #f97f2a;
+}
