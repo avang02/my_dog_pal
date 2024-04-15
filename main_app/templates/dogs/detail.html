@@ -43,8 +43,17 @@
                                 <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
                                 <p><strong>Weight:</strong> {{ dog.weight }}</p>
                                 <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
-                                <p><strong>Ideal Meal Per Day:</strong></p>
-                                <div class="calculator-container"></div>
+                                {% if dog.dogcalculator_set.all %}
+                                    <p><strong>Ideal Meal Per Day:</strong></p>
+                                    {% for calculate in dog.dogcalculator_set.all %}
+                                        <ul class="calculator-weights">
+                                            <li>Ideal weight: <span id="weight">{{ calculate.weight }}</span></li>
+                                            <li>Activity level: <span id="activity">{{ calculate.activity }}</span></li>
+                                            <li>Servings Per Cup: <span id="servingspercup">{{ calculate.servingspercup }}</span></li>
+                                            <li>Food Per Day: </li>
+                                        </ul>
+                                    {% endfor %}
+                                {% endif %}
                                 <div>
                                     {% if dog.dogfood.count %}
                                         {% for food in dog.dogfood.all %}
@@ -64,40 +73,6 @@
     </div>
 
 
-                        <span class="permanent-marker-regular card-title">{{ dog.name }}</span>
-                        <div class="card-content" id="dogdetails-content">
-                            <div class="center-cropped">
-                                {% if dog.img_url %}
-                                <img src="{{ dog.img_url }}" alt="{{ dog.name }}">
-                                {% else %}
-                                <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo" class="profile-image">
-                                {% endif %}
-                            </div>
-                            <p><strong>Breed:</strong> {{ dog.breed }}</p>
-                            <p><strong>Neutered/Spayed:</strong> {% if dog.neutered_spayed %}Yes{% else %}No{% endif %}</p>
-                            <p><strong>Weight:</strong> {{ dog.weight }}</p>
-                            <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
-                        </div>
-                        <div>
-                            {% if dog.dogfood.count %}
-                            {% for food in dog.dogfood.all %}
-                            <p><strong>Current Food: </strong>{{ food.name }}</p>
-                            <p><strong>Caloric Content: </strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup
-                            </p>
-                            <p><strong>{{ food.current_food }}</strong></p>
-                            <p><strong>{{ food.new_food }}</strong></p>
-                            <form action="{% url 'unassoc_dogfood' dog.id food.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn">Remove</button>
-                            </form>
-                            {% endfor %}
-                            {% else %}
-                            <h5>No Dogfood</h5>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div id="food-options-modal" class="modal">
                 <div class="modal-content">
                     <h3>Dog Food Options</h3>
@@ -152,71 +127,66 @@
                     <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
                 </div>
             </div>
-            <div id="food-calculator-modal" class="modal">
-                <div class="modal-content">
-                    <h3>Dog Food Calculator</h3>
-                    <div class="card-content">
-                        <form action="">
-                            <label for="ideal-weight">Ideal Weight: </label>
-                            <input type="number" name="ideal-weight" id="ideal-weight">
-                            <label for="activity-level">Activitiy Level: </label>
-                            <select name="activity" class="input-field" id="activity" display="visible">
-                                <option value="60.82">Typical</option>
-                                <option value="69.18">Active</option>
-                                <option value="38.77">Overweight</option>
-                                <option value="96.92">High Activity</option>
-                                <option value="49.79">Senior</option>
-                                <option value="49.79">Inactive</option>
-                                <option value="77.36">Light Duty</option>
-                                <option value="89.99">Medium Duty</option>
-                                <option value="117.63">High Duty</option>
-                            </select>
-                            <label for="servingspercup">Servings Per Cup: </label>
-                            <input type="number" min="1" max="5" id="servingspercup">
-                            <button type="submit" value="Calculate" id="calculate"></button>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
-                </div>
-            </div>
-            <div id="photos-modal" class="modal">
-                <div class="modal-content">
-                    <h3>{{ dog.name }}'s Photo Gallery</h3>
-                    <div class="card-content">
-                        {% for photo in dog.photo_set.all %}
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="{{photo.url}}" alt="Dog Photo" width="100px"> 
-                                <span class="card-title">{{ photo.title }}</span>
-                            </div>
+            
+                <div id="food-calculator-modal" class="modal">
+                    <div class="modal-content">
+                        <h3>Dog Food Calculator</h3>
+                        <div class="card-content">
+                            <form action="{% url 'dogcalculator_create' dog.id %}" method="POST">
+                                {% csrf_token %}
+                                {{ dogcalculator_form.as_p }}
+                                <input type="submit" value="Calculate" class="btn">
+                            </form>
                         </div>
-                        {% empty %}
-                        <div class="col s12">
-                            <p>No photos uploaded</p>
-                        </div>
-                        {% endfor %}
                     </div>
                     <div class="modal-footer">
                         <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
                     </div>
                 </div>
-            </div>
-            <div id="add-photos" class="section" style="display: none;">
-                <div class="card">
-                    <h3>Add Photos</h3>
-                    <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-                        {% csrf_token %}
-                        <input type="file" name="photo-file">
-                        <br><br>
-                        <button type="submit" class="btn">Upload Photo</button>
-                    </form>
+
+                <div id="photos-modal" class="modal">
+                    <div class="modal-content">
+                        <h3>{{ dog.name }}'s Photo Gallery</h3>
+                        <div class="card-content">
+                            {% for photo in dog.photo_set.all %}
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="{{photo.url}}" alt="Dog Photo" width="100px"> 
+                                    <span class="card-title">{{ photo.title }}</span>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col s12">
+                                <p>No photos uploaded</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+
+                <div id="add-photos" class="section" style="display: none;">
+                    <div class="card">
+                        <h3>Add Photos</h3>
+                        <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                            {% csrf_token %}
+                            <input type="file" name="photo-file">
+                            <br><br>
+                            <button type="submit" class="btn">Upload Photo</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
+
 
 <style>
     .center-cropped {
@@ -260,36 +230,7 @@
             draggable: false 
         });
     });
-
-    document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems, options);
-  });
-
-    document.getElementById('calculate').addEventListener('onclick', function() {
-        const dogContents = document.getElementById('calculator-container');
-        const idealWeight = document.getElementById('ideal-weight').value;
-        const activity = document.getElementById('activity').value;
-        const servingspercup = document.getElementById('servingspercup').value;
-
-        const weightP = document.createElement('p');
-        weightP.id = 'ideal-weight';
-        weightP.textContent = idealWeight;
-
-        const activityP = document.createElemenet('p');
-        activityP.id = 'activity';
-        activityP.textContent = activity;
-
-        const servingspercupP = document.createElement('p');
-        servingspercupP.id = 'servingspercup';
-        servingspercupP.textContent = servingspercup;
-
-        dogContents.appendChild(weightP);
-        dogContents.appendChild(activityP);
-        dogContents.appendChild(servingspercupP);
-    })
-
-
 </script>
+
 
 {% endblock %}
