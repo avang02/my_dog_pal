@@ -18,13 +18,23 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-content" >
+    <div class="card-content" id="foodtransition-card">
         <h2 class="card-title">Food Transition</h2>
-        <div>
-            <p><strong><img src="{% static 'images/days1-3.jpg' %}"> 75% {{ foodtrans.current_food }} | 25% {{ foodtrans.new_food }}</strong></p>
-            <p><strong><img src="{% static 'images/days4-6.jpg' %}"> 50% {{ foodtrans.current_food }} | 50% {{ foodtrans.new_food }}</strong></p>
-            <p><strong><img src="{% static 'images/days7-9.jpg' %}"> 25% {{ foodtrans.current_food }} | 75% {{ foodtrans.new_food }}</strong></p>
-            <p><strong><img src="{% static 'images/day10.jpg' %}"> 100% {{ foodtrans.new_food }}</strong></p>
+        <div class="foodtransition-imgs">
+            <table>
+                <tr>
+                    <td><img src="{% static 'images/days1-3.jpg' %}"></td>
+                    <td><img src="{% static 'images/days4-6.jpg' %}"></td>
+                    <td><img src="{% static 'images/days7-9.jpg' %}"></td>
+                    <td><img src="{% static 'images/day10.jpg' %}"></td>
+                </tr>
+                <tr>
+                    <td><p>New Food: {{ foodtrans.current_food }} 25%</p><p>Current Food: {{ foodtrans.new_food }} 75%</p></td>
+                    <td><p>New Food: {{ foodtrans.current_food }} 50%</p><p>Current Food: {{ foodtrans.new_food }} 50%</p></td>
+                    <td><p>New Food: {{ foodtrans.current_food }} 75%</p><p>Current Food: {{ foodtrans.new_food }} 25%</p></td>
+                    <td><p>New Food: {{ foodtrans.current_food }} 100%</p></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
