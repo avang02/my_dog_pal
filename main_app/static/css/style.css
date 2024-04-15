@@ -382,3 +382,11 @@ footer.page-footer {
     flex-direction: row;
     justify-content: space-between;
 }
+
+#newfood {
+    color: green;
+}
+
+#currentfood {
+    color: rgb(221, 43, 43);
+}
