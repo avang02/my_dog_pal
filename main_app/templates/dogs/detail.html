@@ -45,25 +45,25 @@
                                 <p><strong>Birthdate:</strong> {{ dog.birthdate }}</p>
                                 {% if ideal_weight != None or activity != None or servingspercup != None %}
                                 <div class="calculator-container"></div>
-                                    <p><strong>Ideal Weight: </strong>{{ ideal_weight }}</p>
-                                    <p><strong>Activity Level: </strong>{{ activity }} kcal/lbs</p>
-                                    <p><strong>Servings Per Cup: </strong>{{ servingspercup }} Servings</p>
-                                    <p><strong>Amount of Calories Needed Per Day: </strong>{{ kcal_per_day }} Calories</p>
+                                    <p><strong id="makered">Ideal Weight: </strong>{{ ideal_weight }}</p>
+                                    <p><strong id="makered">Activity Level: </strong>{{ activity }} kcal/lbs</p>
+                                    <p><strong id="makered">Servings Per Cup: </strong>{{ servingspercup }} Servings</p>
+                                    <p><strong id="makered">Amount of Calories Needed Per Day: </strong>{{ kcal_per_day }} Calories</p>
                                 <div>
                                 {% endif %}
                                     {% if dog.dogfood.count %}
                                         {% for food in dog.dogfood.all %}
-                                            <p><strong>Current Food: </strong>{{ food.name }}</p>
-                                            <p><strong>Caloric Content: </strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
+                                            <p><strong id="makeorange">Current Food: </strong>{{ food.name }}</p>
+                                            <p><strong id="makeorange">Caloric Content: </strong>{{ food.gramperserving }} kcal/kg, {{ food.kcalperserving }} kcal/cup</p>
                                         {% endfor %}
                                     {% else %}
                                         <h5>No Dogfood</h5>
                                     {% endif %}
                                     {% if dog.foodtrans.count %}
                                         {% for foodtran in dog.foodtrans.all %}
-                                            <p><strong>Meal Plan: </strong>{{ foodtran.name }}</p>
-                                            <p><strong>Current Food: </strong>{{ foodtran.current_food }}</p>
-                                            <p><strong>New Food: </strong>{{ foodtran.new_food }}</p>
+                                            <p><strong id="makegreen">Meal Plan: </strong>{{ foodtran.name }}</p>
+                                            <p><strong id="makegreen">Current Food: </strong>{{ foodtran.current_food }}</p>
+                                            <p><strong id="makegreen">New Food: </strong>{{ foodtran.new_food }}</p>
                                         {% endfor %}
                                     {% endif %}
                                 </div>
