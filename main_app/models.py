@@ -28,8 +28,22 @@ class MyVet(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('myvet_detail', kwargs={'pk':self.id})
+        return reverse('myvet_detail', kwargs={'pk':self.id})  
+    
+class FoodTrans(models.Model):
+    name = models.CharField(max_length=50)
+    current_food = models.ForeignKey(DogFood, on_delete=models.CASCADE)
+    new_food = models.CharField(max_length=50)
+    meals_a_day = models.IntegerField()
+    start_date = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('foodtrans_detail', kwargs={'pk':self.id})
+    
 class Dog(models.Model):
     name = models.CharField(max_length=50)
     id_number = models.IntegerField(null=True, blank=True)
@@ -39,6 +53,7 @@ class Dog(models.Model):
     birthdate = models.DateField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dogfood = models.ManyToManyField(DogFood)
+    foodtrans = models.ManyToManyField(FoodTrans)
     vet = models.ManyToManyField(MyVet)
     img_url = models.URLField(null=True, blank=True)
 
@@ -47,22 +62,6 @@ class Dog(models.Model):
     
     def get_absolute_url(self):
         return reverse('detail', kwargs={'dog_id':self.id})
-    
-    
-class FoodTrans(models.Model):
-    name = models.CharField(max_length=50)
-    current_food = models.ForeignKey(DogFood, on_delete=models.CASCADE)
-    new_food = models.CharField(max_length=50)
-    meals_a_day = models.IntegerField()
-    start_date = models.DateField()
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-    
-    def get_absolute_url(self):
-        return reverse('foodtrans_detail', kwargs={'pk':self.id})
     
 class Photo(models.Model):
     url = models.CharField(max_length=200)

@@ -11,9 +11,9 @@
         </li>
         <li><a href="#food-options-modal" class="modal-trigger"><i class="material-icons left">fastfood</i>Dog Food</a></li>
         <li><a href="#food-calculator-modal" class="modal-trigger"><i class="material-icons left">calculate</i>Calculator</a></li>
-        <li><a href="#"><i class="material-icons left">sync_alt</i>Transition</a></li>
+        <li><a href="#foodtrans-options-modal" class="modal-trigger"><i class="material-icons left">sync_alt</i>Transition</a></li>
         <li><a href="#photos-modal" class="modal-trigger"><i class="material-icons left">collections</i>Gallery</a></li>
-        <li><a href="#add-photos-modal"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
+        <li><a href="#add-photos-modal" class="modal-trigger"><i class="material-icons left">add_a_photo</i>Add A Photo</a></li>
         <li>
             <div class="divider"></div>
         </li>
@@ -59,6 +59,13 @@
                                     {% else %}
                                         <h5>No Dogfood</h5>
                                     {% endif %}
+                                    {% if dog.foodtrans.count %}
+                                        {% for foodtran in dog.foodtrans.all %}
+                                            <p><strong>Meal Plan: </strong>{{ foodtran.name }}</p>
+                                            <p><strong>Current Food: </strong>{{ foodtran.current_food }}</p>
+                                            <p><strong>New Food: </strong>{{ foodtran.new_food }}</p>
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -72,7 +79,6 @@
         <div class="modal-content">
             <h3>Dog Food Options</h3>
             <div>
-                
                 <table class="highlight">
                     <thead>
                         <tr>
@@ -156,6 +162,60 @@
         </div>
     </div>
 
+    <div id="foodtrans-options-modal" class="modal">
+        <div class="modal-content">
+            <h3>Dog Food Transition Plan</h3>
+            <div>
+                <table class="highlight">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Current Food</th>
+                            <th>New Food</th>
+                            <th>Meals Per Day</th>
+                            <th>Start Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if foodtrans.count %}
+                        {% for foodtran in dog.foodtrans.all %}
+                        <p><strong>Current Food Plan: </strong>{{ foodtran.name }}</p>
+                                <p><strong>Current Food: </strong>{{ foodtran.current_food }} | New Food: {{ foodtran.new_food }} kcal/cup</p>
+                                <form action="{% url 'unassoc_foodtrans' dog.id foodtran.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn">Remove</button>
+                                </form>
+                        {% endfor %}
+                        {% for foodtran in foodtrans %}
+                        <tr>
+                            <td>{{ foodtran.name }}</td>
+                            <td>{{ foodtran.current_food }}</td>
+                            <td>{{ foodtran.new_food }}</td>
+                            <td>{{ foodtran.meals_a_day }}</td>
+                            <td>{{ foodtran.start_date }}</td>
+                            <td>
+                                <form action="{% url 'assoc_foodtrans' dog.id foodtran.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="orange">Add</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No Food Transition Plan Created</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-orange btn-flat">Close</a>
+        </div>
+    </div>
+
     <div id="photos-modal" class="modal">
         <div class="modal-content">
             <h3>{{ dog.name }}'s Photo Gallery</h3>
@@ -179,7 +239,7 @@
         </div>
     </div>
 
-    <div id="add-photos-modal" class="section" style="display: none;">
+    <div id="add-photos-modal" class="modal">
         <div class="card">
             <h3>Add Photos</h3>
             <form action="{% url 'add_photo' dog.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
@@ -192,8 +252,6 @@
     </div>
 </main>
 
-
-
 <style>
     .center-cropped {
     width: 100%;
@@ -202,8 +260,7 @@
     overflow: hidden;
     float: left;
     margin-right: 20px; /* Adjust as needed */
-}
-
+    }
 
     .center-cropped img {
         width: 100%;
@@ -223,8 +280,6 @@
 </style>
 
 <script>
-
-
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems);
@@ -243,29 +298,6 @@
             draggable: false 
         });
     });
-
-    console.log("Before the eventlistener");
-    // document.getElementById('calculate').addEventListener.onsubmit = 
-    function Calculate(e) {
-        e.preventDefault();
-        console.log("This is working");
-        // const dogContents = document.getElementById('calculator-container');
-        const idealWeight = document.getElementById('ideal-weight').value;
-        const activity = document.getElementById('activity').value;
-        const servingspercup = document.getElementById('servingspercup').value;
-
-        const weightP = document.getElementById('ideal-weight p');
-        weightP.innerText = "Ideal Weight: " + idealWeight;
-
-        const activityP = document.getElementById('activity p');
-        activityP.innerText = "Activity Level: " + activity;
-
-        const servingspercupP = document.getElementById('servingspercup p');
-        servingspercupP.innerText = "Servings Per Cup: " + servingspercup;
-    }
 </script>
-
-
-
 
 {% endblock %}

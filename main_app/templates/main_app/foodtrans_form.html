@@ -44,28 +44,6 @@
                             <div class="container"> 
                                 <input type="text" class="datepicker" name="" id="">
                             </div>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function(){
-                                    var dates=document.querySelectorAll('.datepicker');
-                                    M.Datepicker.init(dates,{
-                                        autoClose:true,
-                                        format:'mm/dd/yyyy',
-                                        showClearBtn:true,
-                                        i18n:{
-                                            cancel:'Closedatepicker',
-                                            done:'okay',
-                                            clear:'clearpicker',
-                                        }
-    
-                                    })
-                                })
-                            </script>
-                        </div>
-                    </div>
-                    <div class="row"> 
-                        <div class="input-field col s12">
-                            {{ form.dog.label_tag }} <br>
-                            {{ form.dog }}
                         </div>
                     </div>
                     <div class="row">
@@ -78,5 +56,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var dates=document.querySelectorAll('.datepicker');
+        M.Datepicker.init(dates,{
+            autoClose:true,
+            format:'mm/dd/yyyy',
+            showClearBtn:true,
+            i18n:{
+                cancel:'Closedatepicker',
+                done:'okay',
+                clear:'clearpicker',
+            }
+        })
+    })
+</script>
 
 {% endblock %}
