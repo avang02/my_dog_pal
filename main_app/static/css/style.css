@@ -19,7 +19,7 @@ main {
 }
 
 footer {
-    background-color: #0066cc;
+    background-color: #ffa149 !important;
     color: white;
     text-align: center;
     padding: 20px 0;
