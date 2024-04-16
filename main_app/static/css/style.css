@@ -402,3 +402,11 @@ footer.page-footer {
 #makeorange {
     color: rgb(202, 143, 32);
 }
+
+.active{
+    color: orange !important;
+}
+
+.datepicker-date-display {
+    background-color: #ffa149;
+}

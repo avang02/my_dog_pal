@@ -36,13 +36,17 @@
                                         <img src="https://i.imgur.com/DMskkHv.png" alt="No Photo" class="profile-image">
                                     {% endif %}
                                 </div>
-                                <div class="carousel"> 
-                                    {% for photo in dog.photo_set.all %}
-                                    <a class="carousel-item" href="#one!"> 
-                                        <img src="{{photo.url}}"> 
-                                    </a> 
-                                    {% endfor %}                            
-                                </div>    
+                                <div class="carousel">
+                                    {% if dog.photo_set.all %}
+                                        {% for photo in dog.photo_set.all %}
+                                            <a class="carousel-item" href="#!"> 
+                                                <img src="{{photo.url}}"> 
+                                            </a> 
+                                        {% endfor %}
+                                    {% else %}
+                                        <a></a>
+                                    {% endif %}
+                                </div>                                                       
                             </div>
                             <div class="col s12 m6">
                                 <span class="permanent-marker-regular card-title">{{ dog.name }}</span>
