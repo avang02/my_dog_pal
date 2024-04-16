@@ -233,7 +233,7 @@ def myvet_detail(request, pk):
     })
     
 def secretkey(request):
-    secrect_key = os.environ['SECRET_KEY']
+    secret_key = os.environ['SECRET_KEY']
 
 def add_photo(request, dog_id):
     photo_file = request.FILES.get('photo-file', None)

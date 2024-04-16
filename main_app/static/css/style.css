@@ -19,7 +19,7 @@ main {
 }
 
 footer {
-    background-color: #0066cc;
+    background-color: #ffa149 !important;
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -401,4 +401,12 @@ footer.page-footer {
 
 #makeorange {
     color: rgb(202, 143, 32);
+}
+
+.active{
+    color: orange !important;
+}
+
+.datepicker-date-display {
+    background-color: #ffa149;
 }
