@@ -50,24 +50,17 @@
                     </div>
                 </form>
             </div>
-        </div>
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <button onclick="window.open('/vet_search', 'popup', 'width=600,height=400,scrollbars=yes,resizable=yes')" class="waves-effect waves-light btn"><i class="material-icons left">search</i>FIND NEAREST VET</button>                </div>
+            </div>
+         </div>
     </div>
 </div>
 
 
-<h1>Vet Search</h1>
-<form action="https://maps.googleapis.com/maps/api/place/findplacefromtext/json" method="get">
-    <input type="text" name="input" value="vet" style="display: none;">
-    <input type="text" name="inputtype" value="textquery" style="display: none;">
-    <input type="text" name="fields" value="formatted_address,name,business_status,place_id" style="display: none;">
-    <input type="text" name="key" value="AIzaSyAUwpcXbJv7Jyb4_HJL7nYFVBQ7Xjv3CuA" style="display: none;">
-    <button type="submit">Find Vet</button>
-</form>
 
-<form action="{% url 'vet_search' %}" method="get">
-    <input type="text" id="input" name="input" value="vet">
-    <button type="submit">Find Vet</button>
-</form>
+
 
 
 
