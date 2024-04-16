@@ -55,6 +55,6 @@
 
 # Next Steps
 
-- AAU I want to know my dog in human years.
+- AAU I want to know my dogs age.
 - AAU I want to know my dogs medical history.
 - AAU I want to know all the dedications my dog is taking
