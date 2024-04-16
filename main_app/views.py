@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from math import pow
+import json
 import uuid
 import boto3
 import os
@@ -130,9 +131,14 @@ class FoodTransCreate(LoginRequiredMixin, CreateView):
     model = FoodTrans
     fields = ['name', 'current_food', 'new_food', 'meals_a_day', 'start_date']
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    def post(self, request, *args, **kwargs):
+       form_class = self.get_form_class()
+       form = self.get_form(form_class)
+       form.instance.user = self.request.user
+    #    print(json.dumps(request.POST.dict()))
+       if form.is_valid():
+           form.save()
+       return self.form_valid(form)
 
 class FoodTransDelete(LoginRequiredMixin, DeleteView):
     model = FoodTrans
