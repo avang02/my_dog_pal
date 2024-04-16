@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>My Vets</h1>
+<h1 class="luckiest-guy-regular">My Vets</h1>
 
 <div class="card-container">
     {% for vet in myvet %}
@@ -20,6 +20,42 @@
     {% endfor %}
 </div>
 
+<style>
+    .center-cropped {
+        width: 232px;
+        height: 232px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .center-cropped img {
+        width: auto;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .permanent-marker-regular {
+        font-family: 'Permanent Marker', cursive, sans-serif;
+    }
+
+    .dog-list-heading {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .luckiest-guy-regular {
+        font-family: "Luckiest Guy", cursive;
+        font-weight: 400;
+        font-style: normal;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+</style>
 {% endblock %}
 
 
