@@ -11,6 +11,50 @@ from math import pow
 import uuid
 import boto3
 import os
+import requests
+
+
+def vet_search(request):
+    vet_results = []
+    
+    if request.method == 'GET' and 'input' in request.GET:
+        input_value = request.GET['input']
+        input_type = 'textquery'
+        fields = 'formatted_address,name,business_status,place_id,rating,opening_hours'
+        api_key = 'AIzaSyAUwpcXbJv7Jyb4_HJL7nYFVBQ7Xjv3CuA'
+
+        url = f'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={input_value}&inputtype={input_type}&fields={fields}&key={api_key}'
+        
+        response = requests.get(url)
+        data = response.json()
+
+        if response.status_code == 200 and data.get('status') == 'OK':
+            vet_results = data.get('candidates', [])
+
+    return render(request, 'vet_search.html', {'vet_results': vet_results})
+
+
+# def vet_search(request):
+#     vet_results = []
+    
+#     if request.method == 'GET' and 'input' in request.GET:
+#         input_value = request.GET['input']
+#         input_type = 'textquery'  
+#         fields = 'formatted_address,name,business_status,place_id,rating'  
+#         api_key = 'AIzaSyAUwpcXbJv7Jyb4_HJL7nYFVBQ7Xjv3CuA'
+
+#         # Using Nearby Search endpoint
+#         url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=YOUR_LOCATION&radius=5000&keyword={input_value}&key={api_key}'
+#         response = requests.get(url)
+#         data = response.json()
+
+#         if response.status_code == 200 and data.get('status') == 'OK':
+#             vet_results = data.get('results', [])
+
+#     return render(request, 'vet_search.html', {'vet_results': vet_results})
+
+
+
 
 def signup(request):
     error_message=''

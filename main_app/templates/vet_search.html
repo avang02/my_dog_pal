@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Nearest Vet Search</h1>
+
+<div id="searchForm" style="display: none;">
+    <form id="hiddenForm" action="{% url 'vet_search' %}" method="get">
+        <input type="text" id="input" name="input" value="vet" style="display: none;">
+    </form>
+</div>
+
+<button id="findVetButton">Find Vet</button>
+
+<script>
+document.getElementById('findVetButton').addEventListener('click', function() {
+    document.getElementById('hiddenForm').submit();
+});
+</script>
+
+
+<div id="results">
+    {% if vet_results %}
+        <h2>Results:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Rating</th>
+                    <!-- <th>Opening Hours</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for vet in vet_results %}
+                    <tr>
+                        <td>{{ vet.name }}</td>
+                        <td>{{ vet.formatted_address }}</td>
+                        <td>{{ vet.rating }}</td>
+                        <!-- <td>{{ vet.opening_hours }}</td> -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</div>
+
+
+</body>
+</html>
+
+{% endblock %}
