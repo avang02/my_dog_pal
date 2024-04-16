@@ -407,6 +407,7 @@ footer.page-footer {
     color: orange !important;
 }
 
-.datepicker-date-display {
-    background-color: #ffa149;
+input[type=text]:not(.browser-default):focus:not([readonly]){
+    border-bottom: 1px solid orange !important;
+    box-shadow: 0 1px 0 0 orange !important;
 }
